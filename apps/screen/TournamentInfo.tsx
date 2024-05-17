@@ -1,4 +1,4 @@
-import { View, Text, Image, Dimensions, useWindowDimensions, StyleSheet, ScrollView } from 'react-native'
+import { View, Text, Image, Dimensions, useWindowDimensions, StyleSheet, ScrollView, FlatList } from 'react-native'
 // import React from 'react'
 import * as React from 'react'
 import LinearGradient from 'react-native-linear-gradient'
@@ -6,8 +6,28 @@ import { AntDesign } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { TabView, SceneMap } from 'react-native-tab-view';
 import { TabBar } from 'react-native-tab-view';
+import { FontAwesome } from '@expo/vector-icons';
 
 const screenWidth = Dimensions.get('window').width;
+
+const participants = [
+    { id: '1', name: 'Team A'},
+    { id: '2', name: 'Team B'},
+    { id: '3', name: 'Team C'},
+    { id: '4', name: 'Team D'},
+    { id: '5', name: 'Team E'},
+    { id: '6', name: 'Team F'},
+    { id: '7', name: 'Team G'},
+    { id: '8', name: 'Team H'}
+];
+
+const ParticipantCard = ({ name }) => (
+    <View style={styles.card}>
+        <FontAwesome name="group" size={24} color="#ffffff" marginTop={5} marginBottom={10} />
+        <Text style={styles.cardTitle}>{name}</Text>
+    </View>
+);
+
 const FirstRoute = () => (
     <ScrollView style={styles.scene}>
         <View style={styles.tabOverview}>
@@ -23,7 +43,7 @@ const FirstRoute = () => (
             </View>
         </View>
         <Text style={[styles.tabTitle, {marginTop: 10}]}>Schedule</Text>
-        <View style={styles.tabOverview}>
+        <View style={[styles.tabOverview, {paddingTop: 10}]}>
             <View style={{marginRight: 45}}>
                 <Text style={styles.tabOverviewTitle}>Bracket 1</Text>
                 <Text style={styles.tabOverviewTitle}>Bracket 2</Text>
@@ -73,16 +93,39 @@ const ThirdRoute = () => (
 );
 const FourthRoute = () => (
     <ScrollView style={styles.scene}>
-        <Text style={styles.tabTitle}>Standings</Text>
+        <View style={styles.standingsHeading}>
+            <Text style={styles.tabTitle}>Standing</Text>
+            <View style={styles.viewBracket}>
+                <Text style={styles.status}>View Bracket</Text>
+            </View>
+        </View>
         <View style={styles.standingsBox}>
-
+            <View style={styles.standingTeams}>
+                <View style={{marginRight: 19}}>
+                    <Text style={styles.standing}>1</Text>
+                    <Text style={styles.standing}>2</Text>
+                    <Text style={styles.standing}>3</Text>
+                </View>
+                <View style={{marginRight: 9}}>
+                    <FontAwesome name="group" size={20} color="#ffffff" marginBottom={10} />
+                    <FontAwesome name="group" size={20} color="#ffffff" marginBottom={10} />
+                    <FontAwesome name="group" size={20} color="#ffffff" marginBottom={10} />
+                </View>
+                <View>
+                    <Text style={styles.standing}>Team F</Text>
+                    <Text style={styles.standing}>Team H</Text>
+                    <Text style={styles.standing}>Team A</Text>
+                </View>
+            </View>
         </View>
-        <Text style={styles.tabTitle}>Participants</Text>
-        <View style={styles.participantView}>
-            <Text style={[styles.participantDetail, {marginRight: 12}]}>Team 1</Text>
-            <Text style={[styles.participantDetail, {marginRight: 12}]}>Team 2</Text>
-            <Text style={styles.participantDetail}>Team 3</Text>
-        </View>
+        <Text style={[styles.tabTitle, {marginBottom: 15}]}>Participants</Text>
+        <FlatList
+            data={participants}
+            renderItem={({ item }) => (<ParticipantCard name={item.name} />)}
+            keyExtractor={item => item.id}
+            contentContainerStyle={{ paddingBottom: 20 }}
+            numColumns={3}
+        />
     </ScrollView>
 );
 
@@ -109,11 +152,11 @@ export default function TournamentInfo() {
         <View style={styles.outerContainer}>
             <View style={styles.imageContainer}>
                 <Image source={{uri: 'https://us.v-cdn.net/6036147/uploads/GOQOTHGYG807/l-18-1-1200x675.jpg'}} style={styles.image} />
-                <LinearGradient colors={['transparent', 'black']} style={styles.gradient} />
+                <LinearGradient colors={['transparent', 'black']} style={styles.gradient} start={{ x: 0.5, y: 0 }} end={{ x: 0.5, y: 1 }} />
             </View>
             <View style={styles.innerContainer}>
                 <View style={styles.statusBox}>
-                    <Text style={styles.status}>Open</Text>
+                    <Text style={styles.status}>Ongoing</Text>
                 </View>
                 <View style={styles.tournamentHeading}>
                     <View>
@@ -175,14 +218,14 @@ const styles = StyleSheet.create({
         left: 0,
         right: 0,
         bottom: 0,
-        height: 220,
+        height: '50%',
     },
     innerContainer: {
         flex: 1,
         paddingHorizontal: 25,
     },
     statusBox: {
-        backgroundColor: '#389F7A',
+        backgroundColor: '#8859C5',
         marginTop: 10,
         marginBottom: 5,
         borderRadius: 5,
@@ -256,39 +299,58 @@ const styles = StyleSheet.create({
         color: '#ffffff',
         fontSize: 15,
         fontWeight: 'bold',
-        paddingBottom: 10,
+        // paddingBottom: 10,
     },
     standingsBox: {
         backgroundColor: '#36455D',
         width: '100%',
-        height: 150,
-        marginTop: 10,
+        height: 117,
+        marginTop: 5,
         marginBottom: 20,
-        borderRadius: 5,
+        borderRadius: 15,
         paddingHorizontal: 8,
         paddingVertical: 5,
         alignSelf: 'flex-start',
     },
-    participantView: {
-        // backgroundColor: '#36455D',
-        width: '100%',
-        height: 200,
-        marginTop: 10,
-        marginBottom: 50,
-        flexDirection: 'row',       
-        // paddingHorizontal: 8,
-        // paddingVertical: 5,
-        alignSelf: 'stretch',
-        justifyContent: 'space-between',
-    },
-    participantDetail: {
+    card: {
         backgroundColor: '#36455D',
-        color: '#ffffff',
-        width: 101,
-        height: 107,
-        padding: 10,
+        padding: 15,
+        marginBottom: 10,
         borderRadius: 10,
-        justifyContent: 'flex-end',
+        width: 101,
+        height: 105,
+        marginRight: 10,
+        justifyContent: 'center',
         alignItems: 'center',
+    },
+    cardTitle: {
+        fontSize: 16,
+        color: '#ffffff',
+    },
+    standingsHeading:{
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginBottom: 5,
+    },
+    viewBracket: {
+        backgroundColor: '#4945F7',
+        marginTop: 10,
+        marginBottom: 5,
+        borderRadius: 10,
+        paddingHorizontal: 8,
+        paddingVertical: 5,
+        alignSelf: 'flex-start',
+    },
+    standing: {
+        fontSize: 16,
+        color: '#ffffff',
+        marginBottom: 10,
+    },
+    standingTeams: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginVertical: 10,
+        marginHorizontal: 15,
     },
 });
