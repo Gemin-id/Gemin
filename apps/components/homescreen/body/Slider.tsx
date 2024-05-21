@@ -1,39 +1,58 @@
 import React from 'react';
-import { View, Text, StyleSheet, Dimensions, Image } from 'react-native';
-import Carousel from 'react-native-snap-carousel';
+import { View, Text, StyleSheet, Image, FlatList, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 interface SlideItem {
-  title: string;
   imageUri: string;
+  title?: string; 
+  time?: string; 
 }
 
 const Slider: React.FC = () => {
+  const navigation = useNavigation();
   const data: SlideItem[] = [
-    { title: 'Image 1', imageUri: 'https://example.com/image1.jpg' },
-    { title: 'Image 2', imageUri: 'https://example.com/image2.jpg' },
-    { title: 'Image 3', imageUri: 'https://example.com/image3.jpg' },
-    // Add more images as needed
+    {
+      imageUri: 'https://us.v-cdn.net/6036147/uploads/GOQOTHGYG807/l-18-1-1200x675.jpg',
+      title: 'Tournament 1',
+      time: '01/25/2024 - 13.00',
+    },
+    {
+      imageUri: 'https://www.tcenergy.com/siteassets/about/innovation-social-1200x675.jpg',
+      title: 'Tournament 2',
+      time: '01/25/2024 - 13.00'
+    },
+    {
+      imageUri: 'https://www.thespruce.com/thmb/9QxJZKXZrJ2Q5n6J7f9Jz7wV9L0=/1200x675/smart/filters:no_upscale()/GettyImages-1139207938-5c4b4c4b46e0fb0001d9b1f4.jpg',
+      title: 'Tournament 3',
+      time: '01/25/2024 - 13.00'
+    },
+
   ];
 
   const renderItem = ({ item, index }: { item: SlideItem; index: number }) => {
     return (
-      <View style={styles.slide}>
-        <Text style={styles.title}>{item.title}</Text>
-        <Image source={{ uri: item.imageUri }} style={styles.image} />
-      </View>
+      <TouchableOpacity onPress={() => navigation.navigate('DetailPage')}>
+        <View style={styles.slideContainer}>
+          <Image source={{ uri: item.imageUri }} style={styles.image} />
+          {item.title && ( // Render title only if it exists
+            <Text style={styles.title}>{item.title}</Text>
+          )}
+          {item.time && ( // Render description only if it exists
+            <Text style={styles.description}>{item.time}</Text>
+          )}
+        </View>
+      </TouchableOpacity>
     );
   };
 
   return (
     <View style={styles.container}>
       <Text style={styles.font}>Featured Tournaments</Text>
-      <Carousel
-        layout="default"
+      <FlatList
         data={data}
         renderItem={renderItem}
-        sliderWidth={Dimensions.get('window').width}
-        itemWidth={300}
-        inactiveSlideOpacity={0.7}
+        horizontal
+        showsHorizontalScrollIndicator={false}
       />
     </View>
   );
@@ -51,25 +70,35 @@ const styles = StyleSheet.create({
     color: 'white',
     marginLeft: 20,
     marginBottom: 10,
-    },  
-  slide: {
+  },
+  slideContainer: {
+    marginRight: 4,
+    marginLeft: 8,
+    alignItems: 'center',
+    borderRadius: 10,
     width: 300,
     height: 158,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'white',
-    borderRadius: 10,
-    paddingHorizontal: 20,
-  },
-  title: {
-    fontSize: 16,
-    marginBottom: 10,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   image: {
-    marginTop: 10,
-    width: '100%',
-    height: '80%',
     borderRadius: 10,
+    width: '100%', 
+    height: '100%',
+  },
+  title: {
+    position: 'absolute', 
+    bottom: 38, 
+    left: 16, 
+    color: 'white',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  description: {
+    position: 'absolute', 
+    bottom: 20, 
+    left: 16,
+    color: 'white',
+    fontSize: 14, 
   },
 });
 
