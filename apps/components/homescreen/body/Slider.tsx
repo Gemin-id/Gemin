@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, StyleSheet, Image, FlatList, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import firestore from '@react-native-firebase/firestore';
 
 interface SlideItem {
   imageUri: string;
@@ -8,8 +9,10 @@ interface SlideItem {
   time?: string; 
 }
 
+
 const Slider: React.FC = () => {
   const navigation = useNavigation();
+  
   const data: SlideItem[] = [
     {
       imageUri: 'https://us.v-cdn.net/6036147/uploads/GOQOTHGYG807/l-18-1-1200x675.jpg',
@@ -61,12 +64,12 @@ const Slider: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     marginTop: 20,
-    backgroundColor: '#0E1A2E',
+    backgroundColor: '#0E1A2E', 
     height: 200,
   },
   font: {
-    fontFamily: 'DM Sans Medium',
-    fontSize: 18,
+    fontFamily: 'DM Sans Medium', // Use a similar font family
+    fontSize: 24, // Larger font size for heading
     color: 'white',
     marginLeft: 20,
     marginBottom: 10,
@@ -90,7 +93,7 @@ const styles = StyleSheet.create({
     bottom: 38, 
     left: 16, 
     color: 'white',
-    fontSize: 16,
+    fontSize: 18, // Adjust font size as needed
     fontWeight: 'bold',
   },
   description: {
