@@ -20,7 +20,8 @@
         "image": "./assets/splash.png",
         "resizeMode": "contain",
         "backgroundColor": "#0E1A2E"
-      }
+      },
+      "bundleIdentifier": "com.anonymous.Gemin"
     },
     "android": {
       "adaptiveIcon": {
@@ -31,7 +32,8 @@
           "resizeMode": "contain",
           "backgroundColor": "#0E1A2E"
         }
-      }
+      },
+      "package": "com.anonymous.Gemin"
     },
     "web": {
       "favicon": "./assets/favicon.png"
