@@ -1,26 +1,25 @@
-import { View, StyleSheet } from 'react-native'
-import React, { useEffect, useState } from 'react'
-import Header from '../components/homescreen/Header'
-import Slider from '../components/homescreen/body/Slider'
-import Horizontal from '../components/homescreen/body/Vertical'
+import React from 'react';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import Header from '../components/homescreen/Header';
+import Slider from '../components/homescreen/body/Slider';
+import VerticalImageList from '../components/homescreen/body/Vertical';
 
 const HomeScreen = () => {
-   
     return (
-        <View style={styles.container} >
+        <ScrollView style={styles.container}>
             <Header />
-            <Slider />
-            <Horizontal/>
-        </View>
-    )
-}
+            <View>
+                <Slider />
+                <VerticalImageList />
+            </View>
+        </ScrollView>
+    );
+};
 
 const styles = StyleSheet.create({
     container: {
-      backgroundColor: '#0E1A2E', // Set background color
-      flex: 1, // Allow components to fill available space
+        backgroundColor: '#1E293B', // Set background color
     },
-  });
+});
 
-
-export default HomeScreen; 
+export default HomeScreen;

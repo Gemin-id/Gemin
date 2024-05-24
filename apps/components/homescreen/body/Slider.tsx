@@ -1,46 +1,48 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Image, FlatList, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import firestore from '@react-native-firebase/firestore';
 
 interface SlideItem {
+  id: string; // Add an ID field for Firestore document reference
   imageUri: string;
-  title?: string; 
-  time?: string; 
+  title?: string;
+  time?: string;
 }
-
 
 const Slider: React.FC = () => {
   const navigation = useNavigation();
-  
-  const data: SlideItem[] = [
-    {
-      imageUri: 'https://us.v-cdn.net/6036147/uploads/GOQOTHGYG807/l-18-1-1200x675.jpg',
-      title: 'Tournament 1',
-      time: '01/25/2024 - 13.00',
-    },
-    {
-      imageUri: 'https://www.tcenergy.com/siteassets/about/innovation-social-1200x675.jpg',
-      title: 'Tournament 2',
-      time: '01/25/2024 - 13.00'
-    },
-    {
-      imageUri: 'https://www.thespruce.com/thmb/9QxJZKXZrJ2Q5n6J7f9Jz7wV9L0=/1200x675/smart/filters:no_upscale()/GettyImages-1139207938-5c4b4c4b46e0fb0001d9b1f4.jpg',
-      title: 'Tournament 3',
-      time: '01/25/2024 - 13.00'
-    },
+  const [tournaments, setTournaments] = useState<SlideItem[]>([]);
 
-  ];
+  const getData = async () => {
+    try {
+      const tournamentsRef = firestore().collection('tournaments');
+      const snapshot = await tournamentsRef.get();
+      const fetchedTournaments = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        imageUri: doc.data().imageUri, // Add the imageUri property
+        ...doc.data(),
+      }));
+      setTournaments(fetchedTournaments);
+    } catch (error) {
+      console.error('Error fetching tournaments:', error);
+      // Handle errors appropriately (e.g., display an error message)
+    }
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
 
   const renderItem = ({ item, index }: { item: SlideItem; index: number }) => {
     return (
       <TouchableOpacity onPress={() => navigation.navigate('DetailPage')}>
         <View style={styles.slideContainer}>
           <Image source={{ uri: item.imageUri }} style={styles.image} />
-          {item.title && ( // Render title only if it exists
+          {item.title && (
             <Text style={styles.title}>{item.title}</Text>
           )}
-          {item.time && ( // Render description only if it exists
+          {item.time && (
             <Text style={styles.description}>{item.time}</Text>
           )}
         </View>
@@ -52,7 +54,7 @@ const Slider: React.FC = () => {
     <View style={styles.container}>
       <Text style={styles.font}>Featured Tournaments</Text>
       <FlatList
-        data={data}
+        data={tournaments}
         renderItem={renderItem}
         horizontal
         showsHorizontalScrollIndicator={false}
@@ -63,8 +65,7 @@ const Slider: React.FC = () => {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 20,
-    backgroundColor: '#0E1A2E', 
+    marginTop: 5,
     height: 200,
   },
   font: {
@@ -72,19 +73,19 @@ const styles = StyleSheet.create({
     fontSize: 24, // Larger font size for heading
     color: 'white',
     marginLeft: 20,
-    marginBottom: 10,
+    marginBottom: 5,
   },
   slideContainer: {
     marginRight: 4,
     marginLeft: 8,
     alignItems: 'center',
-    borderRadius: 10,
+    borderRadius: 20,
     width: 300,
     height: 158,
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   image: {
-    borderRadius: 10,
+    borderRadius: 20,
     width: '100%', 
     height: '100%',
   },
