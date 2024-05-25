@@ -1,10 +1,25 @@
-import { View, Text } from 'react-native'
-import React from 'react'
+import React from 'react';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import Header from '../components/homescreen/Header';
+import BodySearch from '../components/searchScreen/BodySearch';
+import VerticalImageList from '../components/homescreen/body/Vertical';
 
-export default function SearchScreen() {
+const SearchScreen = () => {
     return (
-        <View>
-            <Text>Search Screen</Text>
-        </View>
-    )
-}
+        <ScrollView style={styles.container}>
+            <Header />
+            <View>
+                <BodySearch />
+                <VerticalImageList />
+            </View>
+        </ScrollView>
+    );
+};
+
+const styles = StyleSheet.create({
+    container: {
+        backgroundColor: '#1E293B', // Set background color
+    },
+});
+
+export default SearchScreen;

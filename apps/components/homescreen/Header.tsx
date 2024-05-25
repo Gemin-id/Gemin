@@ -21,8 +21,8 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: '#0E1A2E',
     width: '100%',
-    height: verticalScale(88),
-    flexDirection: 'row', // Arrange items horizontally
+    height: verticalScale(90),
+    flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between', // Distribute items evenly along the main axis
     paddingHorizontal: horizontalScale(10), // Add horizontal padding
@@ -33,12 +33,13 @@ const styles = StyleSheet.create({
     fontSize: moderateScale(20),
     fontWeight: 'bold',
     color: 'white',
+    marginBottom: 5
   },
   iconContainer: {
     width: 40,
     height: 40,
     justifyContent: 'center',
     alignItems: 'center',
-    margin: 10,
+    margin: 20,
   },
 });

@@ -8,7 +8,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <View style={styles.container}>
-        <StatusBar translucent backgroundColor="transparent" />
+        {/* <StatusBar translucent backgroundColor="transparent" /> */}
         <AppNavigator />
       </View>
     </NavigationContainer>

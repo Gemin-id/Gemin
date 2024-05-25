@@ -47,8 +47,11 @@ const renderItem = ({ item }: { item: ImageItem }) => {
   return (
     <TouchableOpacity onPress={handlePress} style={styles.imageContainer}>
       <Image source={{ uri: item.imageUrl }} style={styles.image} />
+      <View style={styles.statusContainer}>
+        <Text style={styles.statusFont}>Closed</Text>
+      </View>
       <LinearGradient colors={['transparent', '#1E293B']} style={styles.gradient} start={{ x: 0.5, y: 0 }} end={{ x: 0.5, y: 1 }} />
-      <View style={styles.blurContainer}>
+      <View >
         <Text style={styles.title}>{item.title}</Text>
         {item.description && (
           <Text style={styles.description}>{item.description}</Text>
@@ -80,20 +83,8 @@ const VerticalImageList = () => {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 20,
+    marginTop: 10,
     flex: 1,
-  },
-  blurContainer: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
-    height: 60,
-    justifyContent: 'center',
-    padding: 10,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Semi-transparent background for blur effect
-    borderBottomLeftRadius: 10,
-    borderBottomRightRadius: 10,
   },
   imageContainer: {
     width: Dimensions.get('window').width / NUM_COLUMNS - 20, // Adjust width for 10px margin on each side
@@ -126,10 +117,10 @@ const styles = StyleSheet.create({
   },
   font: {
     fontFamily: 'DM Sans Medium',
-    fontSize: 24,
+    fontSize: 16,
     color: 'white',
     marginLeft: 20,
-    marginBottom: 10,
+    marginBottom: 5,
   },
   gradient: {
       position: 'absolute',
@@ -137,6 +128,24 @@ const styles = StyleSheet.create({
       right: 0,
       bottom: 0,
       height: '50%',
+  },
+  statusContainer: {
+    backgroundColor: 'green', 
+    position: 'absolute',
+    height: 25,
+    width: 60,
+    padding: 5,
+    marginTop: 12,
+    left: 9, 
+    borderRadius: 8,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  statusFont: {
+    fontSize: 10,
+    color: 'white',
+    alignItems: 'center',
+    fontWeight: 'bold',
   }
 });
 

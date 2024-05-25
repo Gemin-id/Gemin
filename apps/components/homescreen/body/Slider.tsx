@@ -8,6 +8,7 @@ interface SlideItem {
   imageUri: string;
   title?: string;
   time?: string;
+  status?: string;
 }
 
 const Slider: React.FC = () => {
@@ -49,6 +50,9 @@ const Slider: React.FC = () => {
           {item.time && (
             <Text style={styles.description}>{item.time}</Text>
           )}
+          <View style={styles.statusContainer}>
+            <Text style={styles.statusFont}>Ongoing</Text>
+          </View>
         </View>
       </TouchableOpacity>
     );
@@ -69,12 +73,12 @@ const Slider: React.FC = () => {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 5,
+    marginTop: 15,
     height: 200,
   },
   font: {
-    fontFamily: 'DM Sans Medium', // Use a similar font family
-    fontSize: 24, // Larger font size for heading
+    fontFamily: 'DM Sans Medium',
+    fontSize: 16, 
     color: 'white',
     marginLeft: 20,
     marginBottom: 5,
@@ -98,7 +102,7 @@ const styles = StyleSheet.create({
     bottom: 38, 
     left: 16, 
     color: 'white',
-    fontSize: 18, // Adjust font size as needed
+    fontSize: 16, 
     fontWeight: 'bold',
   },
   description: {
@@ -106,8 +110,26 @@ const styles = StyleSheet.create({
     bottom: 20, 
     left: 16,
     color: 'white',
-    fontSize: 14, 
+    fontSize: 12, 
   },
+  statusContainer: {
+    backgroundColor: 'green', 
+    position: 'absolute',
+    height: 25,
+    width: 60,
+    padding: 5,
+    marginTop: 15,
+    left: 16, 
+    borderRadius: 8,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  statusFont: {
+    fontSize: 10,
+    color: 'white',
+    alignItems: 'center',
+    fontWeight: 'bold',
+  }
 });
 
 export default Slider;
