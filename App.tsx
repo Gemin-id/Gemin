@@ -1,16 +1,17 @@
+import 'react-native-gesture-handler';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import TabNavigation from './apps/navigation/tabNavigation';
+import AppNavigator from './apps/navigation/AppNavigator';
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <StatusBar translucent backgroundColor="transparent" />
-      <NavigationContainer>
-        <TabNavigation/>
-      </NavigationContainer>
-    </View>
+    <NavigationContainer>
+      <View style={styles.container}>
+        <StatusBar translucent backgroundColor="transparent" />
+        <AppNavigator />
+      </View>
+    </NavigationContainer>
   );
 }
 

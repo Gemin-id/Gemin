@@ -21,12 +21,13 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: '#0E1A2E',
     width: '100%',
-    height: verticalScale(90),
+    height: verticalScale(88),
     flexDirection: 'row', // Arrange items horizontally
     alignItems: 'center',
     justifyContent: 'space-between', // Distribute items evenly along the main axis
     paddingHorizontal: horizontalScale(10), // Add horizontal padding
-    borderRadius: 20,
+    borderBottomLeftRadius: 20,
+    borderBottomRightRadius: 20,
   },
   title: {
     fontSize: moderateScale(20),

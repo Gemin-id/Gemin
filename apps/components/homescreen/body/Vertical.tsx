@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, Dimensions, Image, FlatList, TouchableOpacity, Alert } from 'react-native';
+import LinearGradient from 'react-native-linear-gradient'
 
 interface ImageItem {
   imageUrl: string;
@@ -46,6 +47,7 @@ const renderItem = ({ item }: { item: ImageItem }) => {
   return (
     <TouchableOpacity onPress={handlePress} style={styles.imageContainer}>
       <Image source={{ uri: item.imageUrl }} style={styles.image} />
+      <LinearGradient colors={['transparent', '#1E293B']} style={styles.gradient} start={{ x: 0.5, y: 0 }} end={{ x: 0.5, y: 1 }} />
       <View style={styles.blurContainer}>
         <Text style={styles.title}>{item.title}</Text>
         {item.description && (
@@ -129,6 +131,13 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     marginBottom: 10,
   },
+  gradient: {
+      position: 'absolute',
+      left: 0,
+      right: 0,
+      bottom: 0,
+      height: '50%',
+  }
 });
 
 export default VerticalImageList;

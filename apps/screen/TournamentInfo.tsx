@@ -21,7 +21,7 @@ const participants = [
     { id: '8', name: 'Team H'}
 ];
 
-const ParticipantCard = ({ name }) => (
+const ParticipantCard = ({ name }: { name: string }) => (
     <View style={styles.card}>
         <FontAwesome name="group" size={24} color="#ffffff" marginTop={5} marginBottom={10} />
         <Text style={styles.cardTitle}>{name}</Text>
@@ -152,7 +152,7 @@ export default function TournamentInfo() {
         <View style={styles.outerContainer}>
             <View style={styles.imageContainer}>
                 <Image source={{uri: 'https://us.v-cdn.net/6036147/uploads/GOQOTHGYG807/l-18-1-1200x675.jpg'}} style={styles.image} />
-                <LinearGradient colors={['transparent', 'black']} style={styles.gradient} start={{ x: 0.5, y: 0 }} end={{ x: 0.5, y: 1 }} />
+                <LinearGradient colors={['transparent', '#1E293B']} style={styles.gradient} start={{ x: 0.5, y: 0 }} end={{ x: 0.5, y: 1 }} />
             </View>
             <View style={styles.innerContainer}>
                 <View style={styles.statusBox}>

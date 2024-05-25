@@ -35,8 +35,12 @@ const Slider: React.FC = () => {
   }, []);
 
   const renderItem = ({ item, index }: { item: SlideItem; index: number }) => {
+    const handlePress = () => {
+      navigation.navigate('TournamentInfo');
+    };
+
     return (
-      <TouchableOpacity onPress={() => navigation.navigate('DetailPage')}>
+      <TouchableOpacity onPress={handlePress}>
         <View style={styles.slideContainer}>
           <Image source={{ uri: item.imageUri }} style={styles.image} />
           {item.title && (
