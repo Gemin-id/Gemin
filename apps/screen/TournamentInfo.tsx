@@ -1,4 +1,4 @@
-import { View, Text, Image, Dimensions, useWindowDimensions, StyleSheet, ScrollView, FlatList } from 'react-native'
+import { View, Text, Image, Dimensions, useWindowDimensions, StyleSheet, ScrollView, FlatList, TouchableOpacity } from 'react-native'
 // import React from 'react'
 import * as React from 'react'
 import LinearGradient from 'react-native-linear-gradient'
@@ -193,6 +193,10 @@ export default function TournamentInfo() {
                         />
                     )}
                 />
+                <TouchableOpacity style={{...styles.floatingButton, flexDirection: 'row'}}>
+                    <Text style={{...styles.buttonText, fontSize: 15, color: '#ffffff', fontWeight: 'bold'}}>Register Now!</Text>
+                    <Text style={{...styles.buttonText, fontSize: 20, color: '#EADE75', fontWeight: 'bold'}}>Rp15.000</Text>
+                </TouchableOpacity>
             </View>
         </View>
     )
@@ -352,5 +356,27 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginVertical: 10,
         marginHorizontal: 15,
+    },
+    floatingButton: {
+        width: '100%',
+        height: 50,
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        paddingHorizontal: 15,
+        backgroundColor: '#4598F7',
+        borderRadius: 10,
+        bottom: 30,
+        shadowColor: "#000",
+        shadowOffset: {
+        width: 0,
+        height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 2.5,
+    },
+    buttonText: {
+        fontSize: 15,
+        color: '#ffffff',
     },
 });
