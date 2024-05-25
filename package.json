@@ -9,6 +9,7 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@react-native-community/masked-view": "^0.1.11",
     "@react-native-firebase/app": "^20.0.0",
     "@react-native-firebase/firestore": "^20.0.0",
     "@react-navigation/bottom-tabs": "^6.5.20",
@@ -23,7 +24,7 @@
     "react-native-linear-gradient": "^2.8.3",
     "react-native-pager-view": "^6.3.1",
     "react-native-reanimated": "^3.11.0",
-    "react-native-safe-area-context": "4.8.2",
+    "react-native-safe-area-context": "^4.8.2",
     "react-native-screens": "~3.29.0",
     "react-native-tab-view": "^3.5.2"
   },
