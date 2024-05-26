@@ -3,20 +3,24 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import AppNavigator from './apps/navigation/AppNavigator';
+import RegistrationScreen from './apps/screen/RegistrationScreen';
+import Header from './apps/components/homescreen/Header';
 
 export default function App() {
   return (
-    <NavigationContainer>
+    // <NavigationContainer>
       <View style={styles.container}>
-        <StatusBar translucent backgroundColor="transparent" />
-        <AppNavigator />
+        {/* <StatusBar translucent backgroundColor="transparent" /> */}
+        <Header />
+        <RegistrationScreen />
       </View>
-    </NavigationContainer>
+    // </NavigationContainer>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#1E293B',
   },
 });
