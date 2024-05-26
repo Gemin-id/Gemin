@@ -1,4 +1,4 @@
-import { View, Text, Image, StyleSheet, Dimensions, TouchableOpacity, TextInput, ScrollView } from 'react-native';
+import { View, Text, Image, StyleSheet, Dimensions, TouchableOpacity, TextInput, ScrollView, Keyboard, TouchableWithoutFeedback } from 'react-native';
 import React, { useState } from 'react';
 import LinearGradient from 'react-native-linear-gradient';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -20,8 +20,13 @@ export default function RegistrationScreen() {
     };
 
     return (
-        <View style={styles.outerContainer}>
-            <KeyboardAwareScrollView contentContainerStyle={{flexGrow: 1}}>
+        <ScrollView keyboardShouldPersistTaps='never' contentContainerStyle={{flexGrow: 1}}>
+            <KeyboardAwareScrollView style={{ backgroundColor: '#0E1A2E' }}
+            resetScrollToCoords={{ x: 0, y: 0 }}
+            contentContainerStyle={styles.outerContainer}
+            scrollEnabled={true}>
+            <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+                <View>
                 <View style={styles.imageContainer}>
                     <Image source={{uri: 'https://us.v-cdn.net/6036147/uploads/GOQOTHGYG807/l-18-1-1200x675.jpg'}} style={styles.image} />
                     <LinearGradient colors={['transparent', '#1E293B']} style={styles.gradient} start={{ x: 0.5, y: 0 }} end={{ x: 0.5, y: 1 }} />
@@ -67,12 +72,16 @@ export default function RegistrationScreen() {
                     </View>
                     
                 </View>
-            </KeyboardAwareScrollView>
+            <View>
             <TouchableOpacity style={styles.floatingButton}>
                 <Text style={styles.buttonText}>Register Now!</Text>
                 <Text style={[styles.buttonText, {color: '#EADE75', fontSize: 20}]}>Rp15.000</Text>
             </TouchableOpacity>
-        </View>
+            </View>
+            </View> 
+            </TouchableWithoutFeedback>
+            </KeyboardAwareScrollView>
+        </ScrollView>
     );
 }
 
