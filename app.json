@@ -31,7 +31,8 @@
           "resizeMode": "contain",
           "backgroundColor": "#0E1A2E"
         }
-      }
+      },
+      "package": "com.sjorao.Gemin"
     },
     "web": {
       "favicon": "./assets/favicon.png"

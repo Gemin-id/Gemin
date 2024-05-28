@@ -1,5 +1,4 @@
-import { View, Text, Image, Dimensions, useWindowDimensions, StyleSheet, ScrollView, FlatList, TouchableOpacity } from 'react-native'
-// import React from 'react'
+import { View, Text, Image, Dimensions, useWindowDimensions, StyleSheet, ScrollView, TouchableOpacity } from 'react-native'
 import * as React from 'react'
 import LinearGradient from 'react-native-linear-gradient'
 import { AntDesign } from '@expo/vector-icons';
@@ -10,12 +9,20 @@ import { FontAwesome } from '@expo/vector-icons';
 
 const screenWidth = Dimensions.get('window').width;
 
+const images = [
+    'https://us.v-cdn.net/6036147/uploads/GOQOTHGYG807/l-18-1-1200x675.jpg'
+];
+
 const tournament = [
     { tournamentName: 'Pixel Power 2024', tournamentDate: 'January 1st, 2024', tournamentTime: '13.00' }, 
 ];
 
 const overview = [
     { game: 'Mobile Legends', organizer: 'Pixel Tournaments', tournamentFormat: 'Single Elimination' },
+];
+
+const participants = [
+    { currentParticipants: '8', totalParticipants: '8' },
 ];
 
 const schedule = [
@@ -31,7 +38,7 @@ const prize = [
     { place: '4th - 32nd', prize: 'e-Certificate' },
 ];
 
-const participants = [
+const team = [
     { id: '1', teamName: 'Team A' },
     { id: '2', teamName: 'Team B' },
     { id: '3', teamName: 'Team C' },
@@ -71,7 +78,7 @@ const FirstRoute = () => (
                 ))}
             </View>
         </View>
-        <Text style={[styles.tabTitle, { marginTop: 10 }]}>Schedule</Text>
+        <Text style={[styles.tabTitle, { marginTop: 5 }]}>Schedule</Text>
         <View style={[styles.tabOverview, { paddingTop: 10 }]}>
             <View style={{ marginRight: 45 }}>
                 {schedule.map((item, index) => (
@@ -118,41 +125,50 @@ const ThirdRoute = () => (
         </View>
     </ScrollView>
 );
-const FourthRoute = () => (
-    <ScrollView style={styles.scene}>
-        <View style={styles.standingsHeading}>
-            <Text style={styles.tabTitle}>Standing</Text>
-            <View style={styles.viewBracket}>
-                <Text style={styles.status}>View Bracket</Text>
+const FourthRoute = () => {
+    const isRegistrationClosed = participants[0].currentParticipants === participants[0].totalParticipants;
+
+    return (
+        <ScrollView style={styles.scene}>
+            {isRegistrationClosed && (
+                <>
+                    <View style={styles.standingsHeading}>
+                        <Text style={styles.tabTitle}>Standing</Text>
+                        <TouchableOpacity style={styles.viewBracket}>
+                            <Text style={styles.status}>View Bracket</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={styles.standingsBox}>
+                        <View style={styles.standingTeams}>
+                            <View style={{ marginRight: 19 }}>
+                                <Text style={styles.standing}>1</Text>
+                                <Text style={styles.standing}>2</Text>
+                                <Text style={styles.standing}>3</Text>
+                            </View>
+                            <View style={{ marginRight: 9 }}>
+                                <FontAwesome name="group" size={20} color="#ffffff" marginBottom={10} />
+                                <FontAwesome name="group" size={20} color="#ffffff" marginBottom={10} />
+                                <FontAwesome name="group" size={20} color="#ffffff" marginBottom={10} />
+                            </View>
+                            <View>
+                                <Text style={styles.standing}>Team F</Text>
+                                <Text style={styles.standing}>Team H</Text>
+                                <Text style={styles.standing}>Team A</Text>
+                            </View>
+                        </View>
+                    </View>
+                </>
+            )}
+            <Text style={[styles.tabTitle, { marginBottom: 15 }]}>Participants</Text>
+            <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+                {team.map((item) => (
+                    <ParticipantCard key={item.id} teamName={item.teamName} />
+                ))}
             </View>
-        </View>
-        <View style={styles.standingsBox}>
-            <View style={styles.standingTeams}>
-                <View style={{ marginRight: 19 }}>
-                    <Text style={styles.standing}>1</Text>
-                    <Text style={styles.standing}>2</Text>
-                    <Text style={styles.standing}>3</Text>
-                </View>
-                <View style={{ marginRight: 9 }}>
-                    <FontAwesome name="group" size={20} color="#ffffff" marginBottom={10} />
-                    <FontAwesome name="group" size={20} color="#ffffff" marginBottom={10} />
-                    <FontAwesome name="group" size={20} color="#ffffff" marginBottom={10} />
-                </View>
-                <View>
-                    <Text style={styles.standing}>Team F</Text>
-                    <Text style={styles.standing}>Team H</Text>
-                    <Text style={styles.standing}>Team A</Text>
-                </View>
-            </View>
-        </View>
-        <Text style={[styles.tabTitle, { marginBottom: 15 }]}>Participants</Text>
-        <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
-            {participants.map((item) => (
-                <ParticipantCard key={item.id} teamName={item.teamName} />
-            ))}
-        </View>
-    </ScrollView>
-);
+            <View style={{ height: 50 }} />
+        </ScrollView>
+    );
+};
 
 const renderScene = SceneMap({
     first: FirstRoute,
@@ -171,15 +187,21 @@ export default function TournamentInfo() {
         { key: 'fourth', title: 'Participants' },
     ]);
 
+    const isRegistrationClosed = participants[0].currentParticipants === participants[0].totalParticipants;
+    const statusBoxColor = isRegistrationClosed ? '#8859C5' : '#389F7A';
+    const statusText = isRegistrationClosed ? 'Ongoing' : 'Open';
+
     return (
         <View style={styles.outerContainer}>
             <View style={styles.imageContainer}>
-                <Image source={{ uri: 'https://us.v-cdn.net/6036147/uploads/GOQOTHGYG807/l-18-1-1200x675.jpg' }} style={styles.image} />
-                <LinearGradient colors={['transparent', 'black']} style={styles.gradient} start={{ x: 0.5, y: 0 }} end={{ x: 0.5, y: 1 }} />
+            {images.map((image, index) => (
+            <Image key={index} source={{uri: image}} style={styles.image} />
+            ))}
+                <LinearGradient colors={['transparent', '#1E293B']} style={styles.gradient} start={{ x: 0.5, y: 0 }} end={{ x: 0.5, y: 1 }} />
             </View>
             <View style={styles.innerContainer}>
-                <View style={styles.statusBox}>
-                    <Text style={styles.status}>Ongoing</Text>
+                <View style={[styles.statusBox, { backgroundColor: statusBoxColor }]}>
+                    <Text style={styles.status}>{statusText}</Text>
                 </View>
                 <View style={styles.tournamentHeading}>
                     <View>
@@ -195,10 +217,12 @@ export default function TournamentInfo() {
                             </View>
                         ))}
                     </View>
-                    <View style={styles.participantContainer}>
-                        <Text style={styles.participant}>8</Text>
-                        <Text style={styles.totalParticipant}>/8 team</Text>
-                    </View>
+                    {participants.map((item, index) => (
+                        <View key={index} style={styles.participantContainer}>
+                            <Text style={styles.participant}>{item.currentParticipants}</Text>
+                            <Text style={styles.totalParticipant}>/{item.totalParticipants} team</Text>
+                        </View>
+                    ))}
                 </View>
                 <TabView
                     navigationState={{ index, routes }}
@@ -220,9 +244,16 @@ export default function TournamentInfo() {
                         />
                     )}
                 />
-                <TouchableOpacity style={{ ...styles.floatingButton, flexDirection: 'row' }}>
+                <TouchableOpacity 
+                    style={[
+                        styles.floatingButton, 
+                        { backgroundColor: '#4598F7' }, 
+                    ]}
+                    disabled={isRegistrationClosed}
+                >
                     <Text style={{ ...styles.buttonText, fontSize: 15, color: '#ffffff', fontWeight: 'bold' }}>Register Now!</Text>
                     <Text style={{ ...styles.buttonText, fontSize: 20, color: '#EADE75', fontWeight: 'bold' }}>Rp15.000</Text>
+                    {isRegistrationClosed && <View style={styles.disabledOverlay} />}
                 </TouchableOpacity>
             </View>
         </View>
@@ -396,9 +427,21 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
         elevation: 2.5,
+        flexDirection: 'row',
+        position: 'relative',
     },
     buttonText: {
         fontSize: 15,
         color: '#ffffff',
+    },
+    disabledOverlay: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundColor: '#000000',
+        opacity: 0.3,
+        borderRadius: 10,
     },
 });
