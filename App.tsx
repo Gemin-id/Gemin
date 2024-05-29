@@ -3,6 +3,8 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import AppNavigator from './apps/navigation/AppNavigator';
+import TournamentInfo from './apps/screen/TournamentInfo';
+import Header from './apps/components/homescreen/Header';
 
 export default function App() {
   return (

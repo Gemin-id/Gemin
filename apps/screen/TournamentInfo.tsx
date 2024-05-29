@@ -1,5 +1,4 @@
-import { View, Text, Image, Dimensions, useWindowDimensions, StyleSheet, ScrollView, FlatList } from 'react-native'
-// import React from 'react'
+import { View, Text, Image, Dimensions, useWindowDimensions, StyleSheet, ScrollView, TouchableOpacity } from 'react-native'
 import * as React from 'react'
 import LinearGradient from 'react-native-linear-gradient'
 import { AntDesign } from '@expo/vector-icons';
@@ -10,58 +9,95 @@ import { FontAwesome } from '@expo/vector-icons';
 
 const screenWidth = Dimensions.get('window').width;
 
-const participants = [
-    { id: '1', name: 'Team A'},
-    { id: '2', name: 'Team B'},
-    { id: '3', name: 'Team C'},
-    { id: '4', name: 'Team D'},
-    { id: '5', name: 'Team E'},
-    { id: '6', name: 'Team F'},
-    { id: '7', name: 'Team G'},
-    { id: '8', name: 'Team H'}
+const images = [
+    'https://us.v-cdn.net/6036147/uploads/GOQOTHGYG807/l-18-1-1200x675.jpg'
 ];
 
-const ParticipantCard = ({ name }: { name: string }) => (
+const tournament = [
+    { tournamentName: 'Pixel Power 2024', tournamentDate: 'January 1st, 2024', tournamentTime: '13.00' }, 
+];
+
+const overview = [
+    { game: 'Mobile Legends', organizer: 'Pixel Tournaments', tournamentFormat: 'Single Elimination' },
+];
+
+const participants = [
+    { currentParticipants: '8', totalParticipants: '8' },
+];
+
+const schedule = [
+    { bracketNumber: 1, date: 'February 29th, 2024', time: '13.00' },
+    { bracketNumber: 2, date: 'February 29th, 2024', time: '19.00' },
+    { bracketNumber: 3, date: 'March 1st, 2024', time: '13.00' },
+];
+
+const prize = [
+    { place: '1st', prize: 'Rp500.000 + e-Certificate' },
+    { place: '2nd', prize: 'Rp300.000 + e-Certificate' },
+    { place: '3rd', prize: 'Rp200.000 + e-Certificate' },
+    { place: '4th - 32nd', prize: 'e-Certificate' },
+];
+
+const team = [
+    { id: '1', teamName: 'Team A' },
+    { id: '2', teamName: 'Team B' },
+    { id: '3', teamName: 'Team C' },
+    { id: '4', teamName: 'Team D' },
+    { id: '5', teamName: 'Team E' },
+    { id: '6', teamName: 'Team F' },
+    { id: '7', teamName: 'Team G' },
+    { id: '8', teamName: 'Team H' }
+];
+
+interface ParticipantCardProps {
+    teamName: string;
+  }
+
+const ParticipantCard = ({ teamName }: ParticipantCardProps) => (
     <View style={styles.card}>
         <FontAwesome name="group" size={24} color="#ffffff" marginTop={5} marginBottom={10} />
-        <Text style={styles.cardTitle}>{name}</Text>
+        <Text style={styles.cardTitle}>{teamName}</Text>
     </View>
 );
 
 const FirstRoute = () => (
     <ScrollView style={styles.scene}>
         <View style={styles.tabOverview}>
-            <View style={{marginRight: 45}}>
+            <View style={{ marginRight: 45 }}>
                 <Text style={styles.tabOverviewTitle}>Game</Text>
                 <Text style={styles.tabOverviewTitle}>Organizer</Text>
                 <Text style={styles.tabOverviewTitle}>Tournament Format</Text>
             </View>
             <View>
-                <Text style={styles.tabContentDesc}>Mobile Legends</Text>
-                <Text style={styles.tabContentDesc}>Pixel Tournaments</Text>
-                <Text style={styles.tabContentDesc}>Single Elimination</Text>
+                {overview.map((item, index) => (
+                    <View key={index}>
+                        <Text style={styles.tabContentDesc}>{item.game}</Text>
+                        <Text style={styles.tabContentDesc}>{item.organizer}</Text>
+                        <Text style={styles.tabContentDesc}>{item.tournamentFormat}</Text>
+                    </View>
+                ))}
             </View>
         </View>
-        <Text style={[styles.tabTitle, {marginTop: 10}]}>Schedule</Text>
-        <View style={[styles.tabOverview, {paddingTop: 10}]}>
-            <View style={{marginRight: 45}}>
-                <Text style={styles.tabOverviewTitle}>Bracket 1</Text>
-                <Text style={styles.tabOverviewTitle}>Bracket 2</Text>
-                <Text style={styles.tabOverviewTitle}>Bracket 3</Text>
+        <Text style={[styles.tabTitle, { marginTop: 5 }]}>Schedule</Text>
+        <View style={[styles.tabOverview, { paddingTop: 10 }]}>
+            <View style={{ marginRight: 45 }}>
+                {schedule.map((item, index) => (
+                    <Text key={index} style={styles.tabOverviewTitle}>Bracket {item.bracketNumber}</Text>
+                ))}
             </View>
             <View>
-                <Text style={styles.tabContentDesc}>February 29th, 2024</Text>
-                <Text style={styles.tabContentDesc}>February 29th, 2024</Text>
-                <Text style={styles.tabContentDesc}>March 1st, 2024</Text>
+                {schedule.map((item, index) => (
+                    <Text key={index} style={styles.tabContentDesc}>{item.date}</Text>
+                ))}
             </View>
-            <View style={{marginLeft: 30}}>
-                <Text style={styles.tabContentDesc}>13.00</Text>
-                <Text style={styles.tabContentDesc}>19.00</Text>
-                <Text style={styles.tabContentDesc}>13.00</Text>
+            <View style={{ marginLeft: 30 }}>
+                {schedule.map((item, index) => (
+                    <Text key={index} style={styles.tabContentDesc}>{item.time}</Text>
+                ))}
             </View>
         </View>
     </ScrollView>
-);  
+);
 const SecondRoute = () => (
     <ScrollView style={styles.scene}>
         <Text style={styles.tabContentDesc}>1. Setiap anggota harus memiliki akun Gemin</Text>
@@ -76,58 +112,63 @@ const SecondRoute = () => (
 const ThirdRoute = () => (
     <ScrollView style={styles.scene}>
         <View style={styles.tabOverview}>
-            <View style={{marginRight: 45}}>
-                <Text style={styles.tabOverviewTitle}>1st Place</Text>
-                <Text style={styles.tabOverviewTitle}>2nd Place</Text>
-                <Text style={styles.tabOverviewTitle}>3rd Place</Text>
-                <Text style={styles.tabOverviewTitle}>4th - 32nd Place</Text>
+            <View style={{ marginRight: 45 }}>
+                {prize.map((item, index) => (
+                    <Text key={index} style={styles.tabOverviewTitle}>{item.place} Place</Text>
+                ))}
             </View>
             <View>
-                <Text style={styles.tabContentDesc}>Rp500.000 + e-Certificate</Text>
-                <Text style={styles.tabContentDesc}>Rp300.000 + e-Certificate</Text>
-                <Text style={styles.tabContentDesc}>Rp200.000 + e-Certificate</Text>
-                <Text style={styles.tabContentDesc}>e-Certificate</Text>
+                {prize.map((item, index) => (
+                    <Text key={index} style={styles.tabContentDesc}>{item.prize}</Text>
+                ))}
             </View>
         </View>
     </ScrollView>
 );
-const FourthRoute = () => (
-    <ScrollView style={styles.scene}>
-        <View style={styles.standingsHeading}>
-            <Text style={styles.tabTitle}>Standing</Text>
-            <View style={styles.viewBracket}>
-                <Text style={styles.status}>View Bracket</Text>
+const FourthRoute = () => {
+    const isRegistrationClosed = participants[0].currentParticipants === participants[0].totalParticipants;
+
+    return (
+        <ScrollView style={styles.scene}>
+            {isRegistrationClosed && (
+                <>
+                    <View style={styles.standingsHeading}>
+                        <Text style={styles.tabTitle}>Standing</Text>
+                        <TouchableOpacity style={styles.viewBracket}>
+                            <Text style={styles.status}>View Bracket</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={styles.standingsBox}>
+                        <View style={styles.standingTeams}>
+                            <View style={{ marginRight: 19 }}>
+                                <Text style={styles.standing}>1</Text>
+                                <Text style={styles.standing}>2</Text>
+                                <Text style={styles.standing}>3</Text>
+                            </View>
+                            <View style={{ marginRight: 9 }}>
+                                <FontAwesome name="group" size={20} color="#ffffff" marginBottom={10} />
+                                <FontAwesome name="group" size={20} color="#ffffff" marginBottom={10} />
+                                <FontAwesome name="group" size={20} color="#ffffff" marginBottom={10} />
+                            </View>
+                            <View>
+                                <Text style={styles.standing}>Team F</Text>
+                                <Text style={styles.standing}>Team H</Text>
+                                <Text style={styles.standing}>Team A</Text>
+                            </View>
+                        </View>
+                    </View>
+                </>
+            )}
+            <Text style={[styles.tabTitle, { marginBottom: 15 }]}>Participants</Text>
+            <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+                {team.map((item) => (
+                    <ParticipantCard key={item.id} teamName={item.teamName} />
+                ))}
             </View>
-        </View>
-        <View style={styles.standingsBox}>
-            <View style={styles.standingTeams}>
-                <View style={{marginRight: 19}}>
-                    <Text style={styles.standing}>1</Text>
-                    <Text style={styles.standing}>2</Text>
-                    <Text style={styles.standing}>3</Text>
-                </View>
-                <View style={{marginRight: 9}}>
-                    <FontAwesome name="group" size={20} color="#ffffff" marginBottom={10} />
-                    <FontAwesome name="group" size={20} color="#ffffff" marginBottom={10} />
-                    <FontAwesome name="group" size={20} color="#ffffff" marginBottom={10} />
-                </View>
-                <View>
-                    <Text style={styles.standing}>Team F</Text>
-                    <Text style={styles.standing}>Team H</Text>
-                    <Text style={styles.standing}>Team A</Text>
-                </View>
-            </View>
-        </View>
-        <Text style={[styles.tabTitle, {marginBottom: 15}]}>Participants</Text>
-        <FlatList
-            data={participants}
-            renderItem={({ item }) => (<ParticipantCard name={item.name} />)}
-            keyExtractor={item => item.id}
-            contentContainerStyle={{ paddingBottom: 20 }}
-            numColumns={3}
-        />
-    </ScrollView>
-);
+            <View style={{ height: 50 }} />
+        </ScrollView>
+    );
+};
 
 const renderScene = SceneMap({
     first: FirstRoute,
@@ -135,43 +176,53 @@ const renderScene = SceneMap({
     third: ThirdRoute,
     fourth: FourthRoute,
 });
-  
 
 export default function TournamentInfo() {
     const layout = useWindowDimensions();
     const [index, setIndex] = React.useState(0);
     const [routes] = React.useState([
-      { key: 'first', title: 'Overview' },
-      { key: 'second', title: 'Rules' },
-      { key: 'third', title: 'Prizes' },
-      { key: 'fourth', title: 'Participants'},
+        { key: 'first', title: 'Overview' },
+        { key: 'second', title: 'Rules' },
+        { key: 'third', title: 'Prizes' },
+        { key: 'fourth', title: 'Participants' },
     ]);
-    
+
+    const isRegistrationClosed = participants[0].currentParticipants === participants[0].totalParticipants;
+    const statusBoxColor = isRegistrationClosed ? '#8859C5' : '#389F7A';
+    const statusText = isRegistrationClosed ? 'Ongoing' : 'Open';
 
     return (
         <View style={styles.outerContainer}>
             <View style={styles.imageContainer}>
-                <Image source={{uri: 'https://us.v-cdn.net/6036147/uploads/GOQOTHGYG807/l-18-1-1200x675.jpg'}} style={styles.image} />
+            {images.map((image, index) => (
+            <Image key={index} source={{uri: image}} style={styles.image} />
+            ))}
                 <LinearGradient colors={['transparent', '#1E293B']} style={styles.gradient} start={{ x: 0.5, y: 0 }} end={{ x: 0.5, y: 1 }} />
             </View>
             <View style={styles.innerContainer}>
-                <View style={styles.statusBox}>
-                    <Text style={styles.status}>Ongoing</Text>
+                <View style={[styles.statusBox, { backgroundColor: statusBoxColor }]}>
+                    <Text style={styles.status}>{statusText}</Text>
                 </View>
                 <View style={styles.tournamentHeading}>
                     <View>
-                    <Text style={styles.title}>Pixel Power 2024</Text>
-                    <View style={styles.timeContainer}>
-                        <AntDesign name="calendar" size={17} color="#ffffff" />
-                        <Text style={[styles.time, {marginLeft: 3}, {marginRight: 8}]}>January 1st, 2024</Text>
-                        <Ionicons name="time" size={17} color="#ffffff" />
-                        <Text style={[styles.time, {marginLeft: 2}]}>13.00</Text>
+                        {tournament.map((item, index) => (
+                            <View key={index}>
+                                <Text style={styles.title}>{item.tournamentName}</Text>
+                                <View style={styles.timeContainer}>
+                                    <AntDesign name="calendar" size={17} color="#ffffff" />
+                                    <Text style={[styles.time, { marginLeft: 3 }, { marginRight: 8 }]}>{item.tournamentDate}</Text>
+                                    <Ionicons name="time" size={17} color="#ffffff" />
+                                    <Text style={[styles.time, { marginLeft: 2 }]}>{item.tournamentTime}</Text>
+                                </View>
+                            </View>
+                        ))}
                     </View>
-                    </View>
-                    <View style={styles.participantContainer}>
-                        <Text style={styles.participant}>8</Text>
-                        <Text style={styles.totalParticipant}>/8 team</Text>
-                    </View>
+                    {participants.map((item, index) => (
+                        <View key={index} style={styles.participantContainer}>
+                            <Text style={styles.participant}>{item.currentParticipants}</Text>
+                            <Text style={styles.totalParticipant}>/{item.totalParticipants} team</Text>
+                        </View>
+                    ))}
                 </View>
                 <TabView
                     navigationState={{ index, routes }}
@@ -179,20 +230,31 @@ export default function TournamentInfo() {
                     onIndexChange={setIndex}
                     initialLayout={{ width: layout.width }}
                     renderTabBar={props => (
-                        <TabBar 
-                            {...props} 
-                            style={{backgroundColor: 'transparent'}} 
-                            indicatorStyle={{backgroundColor: '#ffffff'}}
-                            labelStyle={{color: '#ffffff', fontSize: 13}}
-                            tabStyle={{padding: 0}}
+                        <TabBar
+                            {...props}
+                            style={{ backgroundColor: 'transparent' }}
+                            indicatorStyle={{ backgroundColor: '#ffffff' }}
+                            labelStyle={{ color: '#ffffff', fontSize: 13 }}
+                            tabStyle={{ padding: 0 }}
                             renderLabel={({ route, focused, color }) => (
-                                <Text style={{color, opacity: focused ? 1 : 0.5}} numberOfLines={1}>
+                                <Text style={{ color, opacity: focused ? 1 : 0.5 }} numberOfLines={1}>
                                     {route.title}
                                 </Text>
                             )}
                         />
                     )}
                 />
+                <TouchableOpacity 
+                    style={[
+                        styles.floatingButton, 
+                        { backgroundColor: '#4598F7' }, 
+                    ]}
+                    disabled={isRegistrationClosed}
+                >
+                    <Text style={{ ...styles.buttonText, fontSize: 15, color: '#ffffff', fontWeight: 'bold' }}>Register Now!</Text>
+                    <Text style={{ ...styles.buttonText, fontSize: 20, color: '#EADE75', fontWeight: 'bold' }}>Rp15.000</Text>
+                    {isRegistrationClosed && <View style={styles.disabledOverlay} />}
+                </TouchableOpacity>
             </View>
         </View>
     )
@@ -236,47 +298,43 @@ const styles = StyleSheet.create({
     status: {
         fontSize: 12,
         color: '#ffffff',
-        // marginTop: 10,
     },
-    tournamentHeading:{
+    tournamentHeading: {
         flexDirection: 'row',
         alignItems: 'center',
         marginBottom: 10,
     },
-    title:{
+    title: {
         fontSize: 24,
         color: '#ffffff',
         fontWeight: 'bold',
     },
-    timeContainer:{
+    timeContainer: {
         marginTop: 5,
         flexDirection: 'row',
         alignItems: 'center',
     },
-    time:{
+    time: {
         fontSize: 13,
         color: '#ffffff',
-        // marginTop: 5,
     },
-    participantContainer:{
+    participantContainer: {
         flexDirection: 'row',
         alignItems: 'baseline',
         marginLeft: 'auto',
     },
-    participant:{
+    participant: {
         fontSize: 48,
         color: '#ffffff',
         textAlign: 'right',
     },
-    totalParticipant:{
+    totalParticipant: {
         fontSize: 14,
         color: '#ffffff',
     },
     scene: {
         flex: 1,
         paddingTop: 20,
-        // justifyContent: 'space-between',
-        // alignSelf: 'flex-start',
     },
     tabOverview: {
         color: '#ffffff',
@@ -299,7 +357,6 @@ const styles = StyleSheet.create({
         color: '#ffffff',
         fontSize: 15,
         fontWeight: 'bold',
-        // paddingBottom: 10,
     },
     standingsBox: {
         backgroundColor: '#36455D',
@@ -327,7 +384,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: '#ffffff',
     },
-    standingsHeading:{
+    standingsHeading: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
@@ -352,5 +409,39 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginVertical: 10,
         marginHorizontal: 15,
+    },
+    floatingButton: {
+        width: '100%',
+        height: 50,
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        paddingHorizontal: 15,
+        backgroundColor: '#4598F7',
+        borderRadius: 10,
+        bottom: 30,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 2.5,
+        flexDirection: 'row',
+        position: 'relative',
+    },
+    buttonText: {
+        fontSize: 15,
+        color: '#ffffff',
+    },
+    disabledOverlay: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundColor: '#000000',
+        opacity: 0.3,
+        borderRadius: 10,
     },
 });
