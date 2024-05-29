@@ -2,16 +2,15 @@ import 'react-native-gesture-handler';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import AppNavigator from './apps/navigation/AppNavigator';
-import TournamentInfo from './apps/screen/TournamentInfo';
 import Header from './apps/components/homescreen/Header';
+import HomeStack from './apps/navigation/homeStack';
 
 export default function App() {
   return (
     <NavigationContainer>
       <View style={styles.container}>
         {/* <StatusBar translucent backgroundColor="transparent" /> */}
-        <AppNavigator />
+        <HomeStack />
       </View>
     </NavigationContainer>
   );
