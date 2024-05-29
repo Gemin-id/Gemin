@@ -1,6 +1,6 @@
 import { View, ScrollView, Text, Image, StyleSheet } from 'react-native';
 import * as React from 'react';
-// import { ScrollView } from 'react-native-gesture-handler';
+import Header from '../components/homescreen/Header';
 
 const tournamentName = [
     'Pixel Power 2024',
@@ -8,8 +8,9 @@ const tournamentName = [
     'Big Versus',
     'Porak Online',
     'FF Cikeruh',
+    'FF Cikeruh',
+    'FF Cikeruh',
 ];
-
 
 const tournamentStanding = [
     '1st',
@@ -79,8 +80,74 @@ const tournaments = tournamentName.map((name, index) => ({
 
 export default function HistoryScreen() {
     return (
-        <View>
-            <Text>History Screen</Text>
-        </View>
-    )
+        <ScrollView style={styles.container}>
+            <Header/>
+            <View style={styles.centerContainer}>
+                {tournaments.map((tournament, index) => (
+                    <View key={index} style={styles.historyContainer}>
+                        <View style={{flexDirection: 'row'}}>
+                            <View style={styles.imageContainer}>
+                                <Image source={{uri: tournament.image}} style={styles.image} />
+                            </View>
+                            <View style={styles.gameHistory}>
+                                <View style={{justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 2}}>
+                                    <Text style={{color: 'white', fontSize: 16, fontWeight: 'bold'}}>{tournament.name}</Text>
+                                    <Text style={{color: 'white', fontSize: 12, fontWeight: 'bold'}}>{tournament.standing} Place</Text>
+                                </View>
+                                <Text style={{color: 'white', fontSize: 10, marginBottom: 3, opacity: 0.8}}>{tournament.gameName}, {tournament.gameDate}</Text>
+                                <Text style={{color: 'white', fontSize: 10, opacity: 0.8}}>{tournament.teamName}: {tournament.members.join(', ')}</Text>
+                            </View>
+                        </View>
+                        <View style={styles.horizontalLine} />
+                        <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingTop: 9}}>
+                            <Text style={{color: 'white', fontSize: 10, marginRight: 15}}>Tournament ID: {tournament.tournamentID}</Text>
+                            <Text style={{color: 'white', fontSize: 10}}>Registration Fee: {tournament.registrationFee}</Text>
+                        </View>
+                    </View>
+                ))}
+                <View style={{height: 40}} />
+            </View>
+        </ScrollView>
+    );
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: '#1E293B',
+    },
+    centerContainer: {
+        alignItems: 'center',
+    },
+    historyContainer: {
+        width: '95%',
+        paddingHorizontal: 15,
+        paddingVertical: 10,
+        backgroundColor: '#36455D',
+        borderRadius: 10,
+        overflow: 'hidden',
+        marginTop: 10,
+    },
+    imageContainer: {
+        height: 70,
+        width: 110,
+        overflow: 'hidden',
+        borderRadius: 10,
+        marginRight: 12,
+    },
+    image: {
+        width: '100%',
+        height: '100%',
+        position: 'absolute',
+    },
+    gameHistory: {
+        width: 180,
+    },
+    horizontalLine: {
+        width: '100%',
+        height: 0.5,
+        backgroundColor: '#ffffff',
+        marginTop: 10,
+        opacity: 0.8,
+    },
+});
