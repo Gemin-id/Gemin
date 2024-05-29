@@ -1,12 +1,19 @@
 import { Platform, StyleSheet, View, Text, SafeAreaView, Image, TouchableOpacity } from 'react-native';
 import React from 'react';
 import { verticalScale, moderateScale, horizontalScale } from '../../../themes/Metrics';
-import { Ionicons } from '@expo/vector-icons'; // or any other icon library you prefer
+import { Ionicons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 
 export default function Header() {
+  const navigation = useNavigation();
+
+  const handleProfilePress = () => {
+    navigation.navigate('Profile');
+  };
+
   return (
     <SafeAreaView style={styles.container}>
-      <TouchableOpacity style={styles.iconContainer}>
+      <TouchableOpacity style={styles.iconContainer} onPress={handleProfilePress}>
         <Ionicons name="person" size={24} color="white" />
       </TouchableOpacity>
       <Text style={styles.title}>Gemin</Text>

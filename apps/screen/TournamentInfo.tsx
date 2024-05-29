@@ -22,7 +22,7 @@ const overview = [
 ];
 
 const participants = [
-    { currentParticipants: '8', totalParticipants: '8' },
+    { currentParticipants: '7', totalParticipants: '8' },
 ];
 
 const schedule = [

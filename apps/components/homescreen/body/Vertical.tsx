@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, Text, StyleSheet, Dimensions, Image, FlatList, TouchableOpacity, Alert } from 'react-native';
-import LinearGradient from 'react-native-linear-gradient'
+import { View, Text, StyleSheet, Dimensions, Image, FlatList, TouchableOpacity } from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
+import { useNavigation } from '@react-navigation/native';
 
 interface ImageItem {
   imageUrl: string;
@@ -10,12 +11,12 @@ interface ImageItem {
 
 const imageData: ImageItem[] = [
   {
-    imageUrl: 'https://source.unsplash.com/random/200x200?city',
+    imageUrl: 'https://source.unsplash.com/random/200x200?city1',
     title: 'Nature Image',
     description: 'A beautiful scene',
   },
   {
-    imageUrl: 'https://source.unsplash.com/random/200x200?city',
+    imageUrl: 'https://source.unsplash.com/random/200x200?city2',
     title: 'City Life',
     description: 'The vibrant energy',
   },
@@ -39,29 +40,31 @@ const imageData: ImageItem[] = [
 
 const NUM_COLUMNS = 2; // Number of columns
 
-const renderItem = ({ item }: { item: ImageItem }) => {
-  const handlePress = () => {
-    Alert.alert('Image Pressed', `You pressed the image titled "${item.title}"`);
+const VerticalImageList = () => {
+  const navigation = useNavigation();
+
+  const renderItem = ({ item }: { item: ImageItem }) => {
+    const handlePress = () => {
+      navigation.navigate('TournamentInfo');
+    };
+
+    return (
+      <TouchableOpacity onPress={handlePress} style={styles.imageContainer}>
+        <Image source={{ uri: item.imageUrl }} style={styles.image} />
+        <View style={styles.statusContainer}>
+          <Text style={styles.statusFont}>Closed</Text>
+        </View>
+        <LinearGradient colors={['transparent', '#1E293B']} style={styles.gradient} start={{ x: 0.5, y: 0 }} end={{ x: 0.5, y: 1 }} />
+        <View>
+          <Text style={styles.title}>{item.title}</Text>
+          {item.description && (
+            <Text style={styles.description}>{item.description}</Text>
+          )}
+        </View>
+      </TouchableOpacity>
+    );
   };
 
-  return (
-    <TouchableOpacity onPress={handlePress} style={styles.imageContainer}>
-      <Image source={{ uri: item.imageUrl }} style={styles.image} />
-      <View style={styles.statusContainer}>
-        <Text style={styles.statusFont}>Closed</Text>
-      </View>
-      <LinearGradient colors={['transparent', '#1E293B']} style={styles.gradient} start={{ x: 0.5, y: 0 }} end={{ x: 0.5, y: 1 }} />
-      <View >
-        <Text style={styles.title}>{item.title}</Text>
-        {item.description && (
-          <Text style={styles.description}>{item.description}</Text>
-        )}
-      </View>
-    </TouchableOpacity>
-  );
-};
-
-const VerticalImageList = () => {
   // Slice the imageData array to get the first 4 items
   const limitedImageData = imageData.slice(0, 8);
 
@@ -106,10 +109,12 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 16,
     fontWeight: 'bold',
+    marginLeft: 5,
   },
   description: {
     color: 'white',
     fontSize: 14,
+    marginLeft: 5,
   },
   columnWrapper: {
     flex: 1,
@@ -123,20 +128,20 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   gradient: {
-      position: 'absolute',
-      left: 0,
-      right: 0,
-      bottom: 0,
-      height: '50%',
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: 0,
+    height: '50%',
   },
   statusContainer: {
-    backgroundColor: 'green', 
+    backgroundColor: 'green',
     position: 'absolute',
     height: 25,
     width: 60,
     padding: 5,
     marginTop: 12,
-    left: 9, 
+    left: 9,
     borderRadius: 8,
     justifyContent: 'center',
     alignItems: 'center',
