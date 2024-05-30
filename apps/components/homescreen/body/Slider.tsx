@@ -17,7 +17,7 @@ const Slider: React.FC = () => {
 
   const getData = async () => {
     try {
-      const tournamentsRef = firestore().collection('tournaments').limit(3); // Limit to 5 tournaments
+      const tournamentsRef = firestore().collection('tournaments').limit(3); // Limit tournaments
       const snapshot = await tournamentsRef.get();
       const fetchedTournaments = snapshot.docs.map((doc) => ({
         id: doc.id,

@@ -14,15 +14,13 @@ interface VerticalItem {
   status?: string;
 }
 
-const NUM_COLUMNS = 2; // Number of columns
-
-const VerticalImageList = () => {
+const VerticalImageList = ({ category }: { category: string }) => {
   const navigation = useNavigation();
   const [tournaments, setTournaments] = useState<VerticalItem[]>([]);
 
-  const getData = async () => {
+  const getData = async (category: string) => {
     try {
-      const tournamentsRef = firestore().collection('tournaments');
+      const tournamentsRef = firestore().collection('tournaments').where('category', '==', category);
       const snapshot = await tournamentsRef.get();
       const fetchedTournaments = snapshot.docs.map((doc) => ({
         id: doc.id,
@@ -40,8 +38,8 @@ const VerticalImageList = () => {
   };
 
   useEffect(() => {
-    getData();
-  }, []);
+    getData(category);
+  }, [category]);
 
   const renderItem = ({ item }: { item: VerticalItem }) => {
     const handlePress = () => {
@@ -75,22 +73,29 @@ const VerticalImageList = () => {
     );
   };
 
-  // Limit the number of items to display to a maximum of 8
-  const limitedTournaments = tournaments.slice(0, 4);
+  const calculateNumColumns = () => {
+    // Calculate the number of columns based on the screen width
+    const screenWidth = Dimensions.get('window').width;
+    const minItemWidth = 150; // Minimum width for each item
+    const numColumns = Math.floor(screenWidth / minItemWidth);
+    return numColumns > 0 ? numColumns : 1; // Ensure at least 1 column
+  };
+
+  const numColumns = calculateNumColumns();
 
   return (
     <View style={styles.container}>
-      <Text style={styles.font}>Mobile Legends</Text>
+      <Text style={styles.font}>{category}</Text>
       <FlatList
-        data={limitedTournaments}
+        data={tournaments}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
-        numColumns={NUM_COLUMNS}
+        numColumns={numColumns}
         columnWrapperStyle={styles.columnWrapper}
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={{ paddingLeft: 10, paddingRight: 10, paddingBottom: 10 }}
       />
-      <View style={{ height: 50 }} />
+      <View style={{ height: 0 }} />
     </View>
   );
 };
@@ -101,11 +106,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   tournamentContainer: {
-    width: Dimensions.get('window').width / NUM_COLUMNS - 20, // Adjust width for 10px margin on each side
-    height: '100%',
-    marginLeft: 5,
-    marginRight: 5,
-    marginBottom: 10,
+    flex: 1,
+    margin: 5,
     borderRadius: 10,
     overflow: 'hidden',
   },
