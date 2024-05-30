@@ -6,6 +6,9 @@ import { Ionicons } from '@expo/vector-icons';
 import { TabView, SceneMap } from 'react-native-tab-view';
 import { TabBar } from 'react-native-tab-view';
 import { FontAwesome } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
+import StatusBox from '../components/StatusBox';
+import FloatingButton from '../components/FloatingButton';
 
 const screenWidth = Dimensions.get('window').width;
 
@@ -47,6 +50,12 @@ const team = [
     { id: '6', teamName: 'Team F' },
     { id: '7', teamName: 'Team G' },
     { id: '8', teamName: 'Team H' }
+];
+
+const price = [
+    'Rp25.000',
+    'Rp15.000',
+    'Rp10.000',
 ];
 
 interface ParticipantCardProps {
@@ -188,21 +197,17 @@ export default function TournamentInfo() {
     ]);
 
     const isRegistrationClosed = participants[0].currentParticipants === participants[0].totalParticipants;
-    const statusBoxColor = isRegistrationClosed ? '#8859C5' : '#389F7A';
-    const statusText = isRegistrationClosed ? 'Ongoing' : 'Open';
 
     return (
         <View style={styles.outerContainer}>
             <View style={styles.imageContainer}>
             {images.map((image, index) => (
-            <Image key={index} source={{uri: image}} style={styles.image} />
+                <Image key={index} source={{uri: image}} style={styles.image} />
             ))}
                 <LinearGradient colors={['transparent', '#1E293B']} style={styles.gradient} start={{ x: 0.5, y: 0 }} end={{ x: 0.5, y: 1 }} />
             </View>
             <View style={styles.innerContainer}>
-                <View style={[styles.statusBox, { backgroundColor: statusBoxColor }]}>
-                    <Text style={styles.status}>{statusText}</Text>
-                </View>
+                <StatusBox isRegistrationClosed={isRegistrationClosed} />
                 <View style={styles.tournamentHeading}>
                     <View>
                         {tournament.map((item, index) => (
@@ -244,17 +249,12 @@ export default function TournamentInfo() {
                         />
                     )}
                 />
-                <TouchableOpacity 
-                    style={[
-                        styles.floatingButton, 
-                        { backgroundColor: '#4598F7' }, 
-                    ]}
+                <FloatingButton
+                    onPress={handleRegisPress}
                     disabled={isRegistrationClosed}
-                >
-                    <Text style={{ ...styles.buttonText, fontSize: 15, color: '#ffffff', fontWeight: 'bold' }}>Register Now!</Text>
-                    <Text style={{ ...styles.buttonText, fontSize: 20, color: '#EADE75', fontWeight: 'bold' }}>Rp15.000</Text>
-                    {isRegistrationClosed && <View style={styles.disabledOverlay} />}
-                </TouchableOpacity>
+                    buttonText='Register Now'
+                    price={price[1]}
+                />
             </View>
         </View>
     )
@@ -285,15 +285,6 @@ const styles = StyleSheet.create({
     innerContainer: {
         flex: 1,
         paddingHorizontal: 25,
-    },
-    statusBox: {
-        backgroundColor: '#8859C5',
-        marginTop: 10,
-        marginBottom: 5,
-        borderRadius: 5,
-        paddingHorizontal: 8,
-        paddingVertical: 5,
-        alignSelf: 'flex-start',
     },
     status: {
         fontSize: 12,
