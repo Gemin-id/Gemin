@@ -36,7 +36,7 @@ const Slider: React.FC = () => {
 
   const renderItem = ({ item, index }: { item: SlideItem; index: number }) => {
     const handlePress = () => {
-      navigation.navigate('TournamentInfo', { imageUri: item.imageUri, title: item.title, time: item.time });
+      navigation.navigate('TournamentInfo', { imageUri: item.imageUri, title: item.title });
     };
 
     return (
