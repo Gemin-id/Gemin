@@ -10,7 +10,8 @@ const HomeScreen = () => {
             <Header />
             <View>
                 <Slider />
-                <VerticalImageList />
+                <VerticalImageList category="Mobile Legends" />
+                <VerticalImageList category="Valorant" />
             </View>
         </ScrollView>
     );

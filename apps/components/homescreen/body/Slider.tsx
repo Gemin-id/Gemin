@@ -17,7 +17,7 @@ const Slider: React.FC = () => {
 
   const getData = async () => {
     try {
-      const tournamentsRef = firestore().collection('tournaments');
+      const tournamentsRef = firestore().collection('tournaments').limit(3); // Limit tournaments
       const snapshot = await tournamentsRef.get();
       const fetchedTournaments = snapshot.docs.map((doc) => ({
         id: doc.id,
@@ -34,9 +34,9 @@ const Slider: React.FC = () => {
     getData();
   }, []);
 
-  const renderItem = ({ item, index }: { item: SlideItem; index: number }) => {
+  const renderItem = ({ item }: { item: SlideItem }) => {
     const handlePress = () => {
-      navigation.navigate('TournamentInfo', { imageUri: item.imageUri, title: item.title });
+      navigation.navigate('TournamentInfo', { imageUri: item.imageUri, title: item.title, status: item.status });
     };
 
     return (
@@ -61,6 +61,7 @@ const Slider: React.FC = () => {
         renderItem={renderItem}
         horizontal
         showsHorizontalScrollIndicator={false}
+        keyExtractor={(item) => item.id}
       />
     </View>
   );

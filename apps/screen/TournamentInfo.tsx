@@ -13,10 +13,6 @@ import FloatingButton from '../components/FloatingButton';
 
 const screenWidth = Dimensions.get('window').width;
 
-const images = [
-    'https://us.v-cdn.net/6036147/uploads/GOQOTHGYG807/l-18-1-1200x675.jpg'
-];
-
 const tournament = [
     { tournamentName: 'Pixel Power 2024', tournamentDate: 'January 1st, 2024', tournamentTime: '13.00' }, 
 ];
@@ -188,7 +184,7 @@ const renderScene = SceneMap({
 });
 
 const TournamentInfo = ({ route }) => {
-    const { imageUri, title } = route.params;
+    const { imageUri, title, status } = route.params;
     const navigation = useNavigation();
     const handleRegisPress = () => {
         navigation.navigate('Registration');
@@ -208,9 +204,7 @@ const TournamentInfo = ({ route }) => {
     return (
         <View style={styles.outerContainer}>
             <View style={styles.imageContainer}>
-            {images.map((image, index) => (
                 <Image key={index} source={{uri: imageUri}} style={styles.image} />
-            ))}
                 <LinearGradient colors={['transparent', '#1E293B']} style={styles.gradient} start={{ x: 0.5, y: 0 }} end={{ x: 0.5, y: 1 }} />
             </View>
             <View style={styles.innerContainer}>

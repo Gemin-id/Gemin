@@ -10,7 +10,7 @@ const SearchScreen = () => {
             <Header />
             <View>
                 <BodySearch />
-                <VerticalImageList />
+                <VerticalImageList category=""  />
             </View>
         </ScrollView>
     );
