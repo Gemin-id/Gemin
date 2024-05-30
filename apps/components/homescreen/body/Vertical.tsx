@@ -1,71 +1,59 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Dimensions, Image, FlatList, TouchableOpacity } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
+import firestore from '@react-native-firebase/firestore';
 
-interface ImageItem {
-  imageUrl: string;
+interface VerticalItem {
+  id: string;
+  imageUri: string;
   title: string;
   description?: string;
   battle?: string;
   prizePool?: string;
+  status?: string;
 }
-
-const imageData: ImageItem[] = [
-  {
-    imageUrl: 'https://www.blibli.com/friends-backend/wp-content/uploads/2023/10/B1000695-Cover-daftar-tournament-e-sport-indonesia.jpg',
-    title: 'All Star Event',
-    description: '02/29/2024  -  13:00',
-    battle: '5v5',
-    prizePool: 'Rp 500.000',
-  },
-  {
-    imageUrl: 'https://media.licdn.com/dms/image/C4E12AQG2fk46LjYHHQ/article-cover_image-shrink_720_1280/0/1563894791754?e=2147483647&v=beta&t=GvhZh0uvobpTzM4wY30cr6dKKHK7GkdBSyw3jf_oAd8',
-    title: 'Big Versus',
-    description: '03/03/2024  -  15:00',
-    battle: '5v5',
-    prizePool: 'Rp 500.000',
-  },
-  {
-    imageUrl: 'https://ichef.bbci.co.uk/news/976/cpsprodpb/09A3/production/_85976420_fwvspng.jpg',
-    title: 'Porak Online',
-    description: '04/14/2024  -  10:00',
-    battle: '5v5',
-    prizePool: 'Rp 500.000',
-  },
-  {
-    imageUrl: 'https://www.androidauthority.com/wp-content/uploads/2019/03/esports-tournaments-leagues-featured.jpg',
-    title: 'FF Cikeruh',
-    description: '12/02/2023  -  09:00',
-    battle: '5v5',
-    prizePool: 'Rp 500.000',
-  },
-  {
-    imageUrl: 'https://source.unsplash.com/random/200x200?water',
-    title: 'Ocean',
-    description: 'A calm ocean',
-    battle: '5v5',
-    prizePool: 'Rp 500.000',
-  },
-  // Add more image data objects with titles and descriptions
-];
 
 const NUM_COLUMNS = 2; // Number of columns
 
 const VerticalImageList = () => {
   const navigation = useNavigation();
+  const [tournaments, setTournaments] = useState<VerticalItem[]>([]);
 
-  const renderItem = ({ item }: { item: ImageItem }) => {
+  const getData = async () => {
+    try {
+      const tournamentsRef = firestore().collection('tournaments');
+      const snapshot = await tournamentsRef.get();
+      const fetchedTournaments = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        imageUri: doc.data().imageUri,
+        title: doc.data().title,
+        description: doc.data().description,
+        battle: doc.data().battle,
+        prizePool: doc.data().prizePool,
+        status: doc.data().status,
+      }));
+      setTournaments(fetchedTournaments);
+    } catch (error) {
+      console.error('Error fetching tournaments:', error);
+    }
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
+
+  const renderItem = ({ item }: { item: VerticalItem }) => {
     const handlePress = () => {
-      navigation.navigate('TournamentInfo');
+      navigation.navigate('TournamentInfo', { tournament: item });
     };
 
     return (
       <TouchableOpacity onPress={handlePress} style={styles.tournamentContainer}>
         <View>
-          <Image source={{ uri: item.imageUrl }} style={styles.image} />
+          <Image source={{ uri: item.imageUri }} style={styles.image} />
           <View style={styles.statusContainer}>
-            <Text style={styles.statusFont}>Closed</Text>
+            <Text style={styles.statusFont}>{item.status}</Text>
           </View>
           <LinearGradient colors={['transparent', '#1E293B']} style={styles.gradient} start={{ x: 0.5, y: 0 }} end={{ x: 0.5, y: 1 }} />
         </View>
@@ -74,35 +62,32 @@ const VerticalImageList = () => {
           {item.description && (
             <Text style={styles.description}>{item.description}</Text>
           )}
-          <View style={{flexDirection: 'row', marginLeft: 5}}>
-          <View style={styles.battleBox}>
-            <Text style={styles.battle}>{item.battle}</Text>
+          <View style={{ flexDirection: 'row', marginLeft: 5 }}>
+            <View style={styles.battleBox}>
+              <Text style={styles.battle}>{item.battle}</Text>
+            </View>
+            <View style={styles.prizePoolBox}>
+              <Text style={styles.prizePool}>{item.prizePool}</Text>
+            </View>
           </View>
-          <View style={styles.prizePoolBox}>
-            <Text style={styles.prizePool}>{item.prizePool}</Text>
-          </View>
-        </View>
         </View>
       </TouchableOpacity>
     );
   };
 
-  // Slice the imageData array to get the first 4 items
-  const limitedImageData = imageData.slice(0, 8);
-
   return (
     <View style={styles.container}>
       <Text style={styles.font}>Mobile Legends</Text>
       <FlatList
-        data={limitedImageData}
-        renderItem={renderItem} // Use the renderItem function directly
-        keyExtractor={(item, index) => index.toString()} // Use index for key extraction
+        data={tournaments}
+        renderItem={renderItem}
+        keyExtractor={(item) => item.id}
         numColumns={NUM_COLUMNS}
         columnWrapperStyle={styles.columnWrapper}
         showsHorizontalScrollIndicator={false}
-        contentContainerStyle={{ paddingLeft: 10, paddingRight: 10, paddingBottom: 10 }} // Add padding for all sides
+        contentContainerStyle={{ paddingLeft: 10, paddingRight: 10, paddingBottom: 10 }}
       />
-      <View style={{height: 50}} />
+      <View style={{ height: 50 }} />
     </View>
   );
 };
