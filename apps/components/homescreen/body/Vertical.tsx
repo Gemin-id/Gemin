@@ -28,9 +28,9 @@ const VerticalImageList = () => {
         id: doc.id,
         imageUri: doc.data().imageUri,
         title: doc.data().title,
-        description: doc.data().description,
+        description: doc.data().time,
         battle: doc.data().battle,
-        prizePool: doc.data().prizePool,
+        prizePool: doc.data().prizepool,
         status: doc.data().status,
       }));
       setTournaments(fetchedTournaments);
@@ -45,7 +45,7 @@ const VerticalImageList = () => {
 
   const renderItem = ({ item }: { item: VerticalItem }) => {
     const handlePress = () => {
-      navigation.navigate('TournamentInfo', { tournament: item });
+      navigation.navigate('TournamentInfo', { imageUri: item.imageUri, title: item.title, status: item.status });
     };
 
     return (
