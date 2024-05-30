@@ -75,11 +75,14 @@ const VerticalImageList = () => {
     );
   };
 
+  // Limit the number of items to display to a maximum of 8
+  const limitedTournaments = tournaments.slice(0, 4);
+
   return (
     <View style={styles.container}>
       <Text style={styles.font}>Mobile Legends</Text>
       <FlatList
-        data={tournaments}
+        data={limitedTournaments}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
         numColumns={NUM_COLUMNS}
