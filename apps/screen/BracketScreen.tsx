@@ -22,6 +22,20 @@ const initialMatches = [
     { matchNumber: 6, team1: participants[10], score1: score[0], team2: participants[11], score2: score[2] },
     { matchNumber: 7, team1: participants[12], score1: score[1], team2: participants[13], score2: score[3] },
     { matchNumber: 8, team1: participants[14], score1: score[2], team2: participants[15], score2: score[0] }
+  ],
+  [
+    { matchNumber: 1, team1: participants[0], score1: 1, team2: participants[3], score2: 0 },
+    { matchNumber: 2, team1: participants[5], score1: 1, team2: participants[7], score2: 0 },
+    { matchNumber: 3, team1: participants[9], score1: 1, team2: participants[11], score2: 0 },
+    { matchNumber: 4, team1: participants[13], score1: 1, team2: participants[15], score2: 0 }
+  ],
+  [
+    { matchNumber: 1, team1: participants[0], score1: 1, team2: participants[7], score2: 0 },
+    { matchNumber: 2, team1: participants[11], score1: 1, team2: participants[15], score2: 0 }
+  ],
+  [
+    { matchNumber: 1, team1: participants[0], score1: 1, team2: participants[15], score2: 0 }
+  
   ]
 ];
 
@@ -94,7 +108,7 @@ const Round = ({ matches, hasNextRound, hasPrevRound }: RoundProps & { hasNextRo
           hasNextRound={hasNextRound}
           hasPrevRound={hasPrevRound}
         />
-        {index % 2 !== 0 && hasNextRound && (
+        {index % 2 === 0 && hasNextRound && (
           <View style={styles.verticalLine} />
         )}
       </View>
@@ -104,17 +118,17 @@ const Round = ({ matches, hasNextRound, hasPrevRound }: RoundProps & { hasNextRo
 
 
 export default function BracketScreen() {
-  const [rounds, setRounds] = useState([initialMatches[0]]);
+  const [rounds, setRounds] = useState(initialMatches);
 
   useEffect(() => {
-    const newRounds = [...rounds];
-    for (let i = 0; i < rounds.length; i++) {
-      const nextRound = generateNextRound(rounds[i]);
-      if (nextRound) {
-        newRounds.push(nextRound);
-      }
-    }
-    setRounds(newRounds);
+    // const newRounds = [...rounds];
+    // for (let i = 0; i < rounds.length; i++) {
+    //   const nextRound = generateNextRound(rounds[i]);
+    //   if (nextRound) {
+    //     newRounds.push(nextRound);
+    //   }
+    // }
+    // setRounds(newRounds); 
   }, []);
 
   return (
@@ -126,6 +140,7 @@ export default function BracketScreen() {
           <View style={styles.bracketContainer}>
             {rounds.map((round, index) => (
               <Round key={index} matches={round} hasNextRound={index < rounds.length - 1} hasPrevRound={index > 0} />
+              
             ))}
           </View>
         </ScrollView>
@@ -199,7 +214,7 @@ const styles = StyleSheet.create({
     width: 2,
     height: '100%',
     backgroundColor: '#ffffff',
-    marginBottom: 138,
+    marginTop: 141,
   },
   horizontalLine: {
     width: 15,
