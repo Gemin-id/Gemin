@@ -10,7 +10,6 @@ import { useNavigation } from '@react-navigation/native';
 import StatusBox from '../components/StatusBox';
 import FloatingButton from '../components/FloatingButton';
 
-
 const screenWidth = Dimensions.get('window').width;
 
 const images = [
@@ -188,11 +187,6 @@ const renderScene = SceneMap({
 });
 
 export default function TournamentInfo() {
-    const navigation = useNavigation();
-    const handleRegisPress = () => {
-        navigation.navigate('Registration');
-      };
-
     const layout = useWindowDimensions();
     const [index, setIndex] = React.useState(0);
     const [routes] = React.useState([
