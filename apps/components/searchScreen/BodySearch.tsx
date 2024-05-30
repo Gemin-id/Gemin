@@ -1,13 +1,21 @@
-import { View, Text, StyleSheet } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
+import { View, TextInput, StyleSheet } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
 
 export default function BodySearch() {
+  const [searchText, setSearchText] = useState('')
+
   return (
     <View style={styles.outerContainer}>
       <View style={styles.container}>
         <Ionicons name="search" size={24} color="white" style={styles.icon} />
-        <Text style={styles.font}>Find Tournaments</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Find Tournaments"
+          placeholderTextColor="#B0B0B0"
+          value={searchText}
+          onChangeText={setSearchText}
+        />
       </View>
     </View>
   )
@@ -33,10 +41,9 @@ const styles = StyleSheet.create({
   icon: {
     marginRight: 10,
   },
-  font: {
+  input: {
     color: 'white',
     fontSize: 15,
-    textAlign: 'left',
-    paddingLeft: 10,
+    flex: 1,
   },
 })
