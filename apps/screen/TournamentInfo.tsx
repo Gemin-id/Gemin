@@ -187,7 +187,8 @@ const renderScene = SceneMap({
     fourth: FourthRoute,
 });
 
-export default function TournamentInfo() {
+const TournamentInfo = ({ route }) => {
+    const { imageUri, title } = route.params;
     const navigation = useNavigation();
     const handleRegisPress = () => {
         navigation.navigate('Registration');
@@ -208,7 +209,7 @@ export default function TournamentInfo() {
         <View style={styles.outerContainer}>
             <View style={styles.imageContainer}>
             {images.map((image, index) => (
-                <Image key={index} source={{uri: image}} style={styles.image} />
+                <Image key={index} source={{uri: imageUri}} style={styles.image} />
             ))}
                 <LinearGradient colors={['transparent', '#1E293B']} style={styles.gradient} start={{ x: 0.5, y: 0 }} end={{ x: 0.5, y: 1 }} />
             </View>
@@ -218,7 +219,7 @@ export default function TournamentInfo() {
                     <View>
                         {tournament.map((item, index) => (
                             <View key={index}>
-                                <Text style={styles.title}>{item.tournamentName}</Text>
+                                <Text style={styles.title}>{title}</Text>
                                 <View style={styles.timeContainer}>
                                     <AntDesign name="calendar" size={17} color="#ffffff" />
                                     <Text style={[styles.time, { marginLeft: 3 }, { marginRight: 8 }]}>{item.tournamentDate}</Text>
@@ -442,3 +443,5 @@ const styles = StyleSheet.create({
         borderRadius: 10,
     },
 });
+
+export default TournamentInfo;
