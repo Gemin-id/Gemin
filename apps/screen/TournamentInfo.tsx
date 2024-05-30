@@ -6,6 +6,8 @@ import { Ionicons } from '@expo/vector-icons';
 import { TabView, SceneMap } from 'react-native-tab-view';
 import { TabBar } from 'react-native-tab-view';
 import { FontAwesome } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
+
 
 const screenWidth = Dimensions.get('window').width;
 
@@ -178,6 +180,11 @@ const renderScene = SceneMap({
 });
 
 export default function TournamentInfo() {
+    const navigation = useNavigation();
+    const handleRegisPress = () => {
+        navigation.navigate('Registration');
+      };
+
     const layout = useWindowDimensions();
     const [index, setIndex] = React.useState(0);
     const [routes] = React.useState([
@@ -250,6 +257,7 @@ export default function TournamentInfo() {
                         { backgroundColor: '#4598F7' }, 
                     ]}
                     disabled={isRegistrationClosed}
+                    onPress={handleRegisPress}
                 >
                     <Text style={{ ...styles.buttonText, fontSize: 15, color: '#ffffff', fontWeight: 'bold' }}>Register Now!</Text>
                     <Text style={{ ...styles.buttonText, fontSize: 20, color: '#EADE75', fontWeight: 'bold' }}>Rp15.000</Text>
