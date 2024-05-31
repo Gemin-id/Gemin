@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#1E293B',
         justifyContent: 'flex-start',
-        marginHorizontal: 10,
+        padding: 25,
     },
     middleSectionTextContainer: {
         height: 50,
