@@ -132,17 +132,21 @@ const ThirdRoute = () => (
     </ScrollView>
 );
 const FourthRoute = () => {
+    const navigation = useNavigation();
     const isRegistrationClosed = participants[0].currentParticipants === participants[0].totalParticipants;
-
+    
     return (
         <ScrollView style={styles.scene}>
             {isRegistrationClosed && (
                 <>
                     <View style={styles.standingsHeading}>
                         <Text style={styles.tabTitle}>Standing</Text>
-                        <TouchableOpacity style={styles.viewBracket}>
-                            <Text style={styles.status}>View Bracket</Text>
-                        </TouchableOpacity>
+                        <TouchableOpacity 
+                        style={styles.viewBracket}
+                        onPress={() => navigation.navigate('Bracket')}
+                    >
+                        <Text style={styles.status}>View Bracket</Text>
+                    </TouchableOpacity>
                     </View>
                     <View style={styles.standingsBox}>
                         <View style={styles.standingTeams}>

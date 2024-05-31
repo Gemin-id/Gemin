@@ -4,6 +4,7 @@ import TabNavigation from './tabNavigation';
 import TournamentInfo from '../screen/TournamentInfo';
 import ProfileScreen from '../screen/ProfileScreen';
 import RegistrationScreen from '../screen/RegistrationScreen';
+import BracketScreen from '../screen/BracketScreen';
 
 const Stack = createStackNavigator();
 
@@ -14,6 +15,7 @@ const HomeStack = () => {
       <Stack.Screen name="TournamentInfo" component={TournamentInfo} />
       <Stack.Screen name="Profile" component={ProfileScreen} /> 
       <Stack.Screen name="Registration" component={RegistrationScreen} /> 
+      <Stack.Screen name="Bracket" component={BracketScreen} /> 
     </Stack.Navigator>
   );
 };
