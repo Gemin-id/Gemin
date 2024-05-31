@@ -6,6 +6,8 @@ import { StyleSheet, Text, View, SafeAreaView, Image, ScrollView, TouchableOpaci
 import { AntDesign } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { useNavigation } from '@react-navigation/native';
+
 
 const schedule = [
     { Detail: 'Registration Fee', count: 'x5', cost: 'Rp3.000' },
@@ -14,6 +16,9 @@ const schedule = [
 ];
 
 const PaymentScreen = () => {
+
+    const navigation = useNavigation();
+
     return (
     <ScrollView keyboardShouldPersistTaps='never' contentContainerStyle={{flexGrow: 1}}>
         <KeyboardAwareScrollView style={{ backgroundColor: '#1E293B' }}
@@ -77,7 +82,7 @@ const PaymentScreen = () => {
                         </View>
                     </View>
                 </View>
-                    <TouchableOpacity style={styles.floatingButton} onPress={() => console.log('Pay Now!')}>
+                    <TouchableOpacity style={styles.floatingButton} onPress={() => navigation.navigate('Confirm')}>
                         <Text style={styles.buttonText}>Pay Now!</Text>
                     </TouchableOpacity>
             </ScrollView>

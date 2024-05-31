@@ -5,6 +5,8 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { AntDesign } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
+
 
 const screenWidth = Dimensions.get('window').width;
 
@@ -18,6 +20,8 @@ export default function RegistrationScreen() {
         updatedMembers[index] = text;
         setTeamMembers(updatedMembers);
     };
+
+    const navigation = useNavigation();
 
     return (
         <ScrollView keyboardShouldPersistTaps='never' contentContainerStyle={{flexGrow: 1}}>
@@ -73,7 +77,10 @@ export default function RegistrationScreen() {
                     
                 </View>
             <View>
-            <TouchableOpacity style={styles.floatingButton}>
+            <TouchableOpacity 
+                style={styles.floatingButton}
+                onPress={() => navigation.navigate('Payment')}
+            >
                 <Text style={styles.buttonText}>Register Now!</Text>
                 <Text style={[styles.buttonText, {color: '#EADE75', fontSize: 20}]}>Rp15.000</Text>
             </TouchableOpacity>

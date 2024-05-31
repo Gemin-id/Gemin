@@ -5,8 +5,11 @@ import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { StyleSheet, Text, View, SafeAreaView, Image, ScrollView, TouchableOpacity } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { useNavigation } from '@react-navigation/native';
 
 const ConfirmScreen = () => {
+    const navigation = useNavigation();
+
     return (
         <SafeAreaView style={styles.container}>
             <KeyboardAwareScrollView style={{ backgroundColor: '#1E293B' }}
@@ -46,7 +49,7 @@ const ConfirmScreen = () => {
                             <Text style={{fontSize: 12, color: '#ffffff', }}>Transfer before February 27, 2024 13.00 or your transaction will automatically be canceled by our system.</Text>
                         </View>
                     </View>
-                    <TouchableOpacity style={styles.floatingButton} onPress={() => console.log('Confirm Payment')}>
+                    <TouchableOpacity style={styles.floatingButton} onPress={() => navigation.navigate('SuccesPay') }>
                         <Text style={styles.buttonText}>Confirm Payment</Text>
                     </TouchableOpacity>
                 </View>
