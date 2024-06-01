@@ -4,13 +4,16 @@ import Header from '../components/homescreen/Header';
 import BodySearch from '../components/searchScreen/BodySearch';
 import VerticalImageList from '../components/homescreen/body/Vertical';
 
+//bisa pakai algoria, typesense
+
 const SearchScreen = () => {
     return (
         <ScrollView style={styles.container}>
             <Header />
             <View>
                 <BodySearch />
-                <VerticalImageList category=""  />
+                <VerticalImageList category="Mobile Legends"  />
+                <VerticalImageList category="Valorant"  />
             </View>
         </ScrollView>
     );
