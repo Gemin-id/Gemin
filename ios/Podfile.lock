@@ -983,6 +983,9 @@ PODS:
     - ReactCommon/turbomodule/core (= 0.73.6)
   - Firebase (10.25.0):
     - Firebase/Core (= 10.25.0)
+  - Firebase/Auth (10.25.0):
+    - Firebase/CoreOnly
+    - FirebaseAuth (~> 10.25.0)
   - Firebase/Core (10.25.0):
     - Firebase/CoreOnly
     - FirebaseAnalytics (~> 10.25.0)
@@ -1010,6 +1013,13 @@ PODS:
     - "GoogleUtilities/NSData+zlib (~> 7.11)"
     - nanopb (< 2.30911.0, >= 2.30908.0)
   - FirebaseAppCheckInterop (10.25.0)
+  - FirebaseAuth (10.25.0):
+    - FirebaseAppCheckInterop (~> 10.17)
+    - FirebaseCore (~> 10.0)
+    - GoogleUtilities/AppDelegateSwizzler (~> 7.8)
+    - GoogleUtilities/Environment (~> 7.8)
+    - GTMSessionFetcher/Core (< 4.0, >= 2.1)
+    - RecaptchaInterop (~> 100.0)
   - FirebaseCore (10.25.0):
     - FirebaseCoreInternal (~> 10.0)
     - GoogleUtilities/Environment (~> 7.12)
@@ -1188,6 +1198,7 @@ PODS:
     - gRPC-Core/Privacy (= 1.62.5)
   - gRPC-Core/Interface (1.62.5)
   - gRPC-Core/Privacy (1.62.5)
+  - GTMSessionFetcher/Core (3.4.1)
   - hermes-engine (0.73.6):
     - hermes-engine/Pre-built (= 0.73.6)
   - hermes-engine/Pre-built (0.73.6)
@@ -2070,6 +2081,10 @@ PODS:
   - React-Mapbuffer (0.73.6):
     - glog
     - React-debug
+  - react-native-image-picker (7.1.2):
+    - glog
+    - RCT-Folly (= 2022.05.16.00)
+    - React-Core
   - react-native-pager-view (6.3.1):
     - glog
     - RCT-Folly (= 2022.05.16.00)
@@ -2243,11 +2258,16 @@ PODS:
     - React-jsi (= 0.73.6)
     - React-logger (= 0.73.6)
     - React-perflogger (= 0.73.6)
+  - RecaptchaInterop (100.0.0)
   - RNCMaskedView (0.1.11):
     - React
   - RNFBApp (20.0.0):
     - Firebase/CoreOnly (= 10.25.0)
     - React-Core
+  - RNFBAuth (20.0.0):
+    - Firebase/Auth (= 10.25.0)
+    - React-Core
+    - RNFBApp
   - RNFBFirestore (20.0.0):
     - Firebase/Firestore (= 10.25.0)
     - nanopb (< 2.30910.0, >= 2.30908.0)
@@ -2316,6 +2336,7 @@ DEPENDENCIES:
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector-modern`)
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
   - React-Mapbuffer (from `../node_modules/react-native/ReactCommon`)
+  - react-native-image-picker (from `../node_modules/react-native-image-picker`)
   - react-native-pager-view (from `../node_modules/react-native-pager-view`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - React-nativeconfig (from `../node_modules/react-native/ReactCommon`)
@@ -2340,6 +2361,7 @@ DEPENDENCIES:
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - "RNCMaskedView (from `../node_modules/@react-native-community/masked-view`)"
   - "RNFBApp (from `../node_modules/@react-native-firebase/app`)"
+  - "RNFBAuth (from `../node_modules/@react-native-firebase/auth`)"
   - "RNFBFirestore (from `../node_modules/@react-native-firebase/firestore`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
@@ -2353,6 +2375,7 @@ SPEC REPOS:
     - Firebase
     - FirebaseAnalytics
     - FirebaseAppCheckInterop
+    - FirebaseAuth
     - FirebaseCore
     - FirebaseCoreExtension
     - FirebaseCoreInternal
@@ -2365,10 +2388,12 @@ SPEC REPOS:
     - GoogleUtilities
     - "gRPC-C++"
     - gRPC-Core
+    - GTMSessionFetcher
     - leveldb-library
     - libevent
     - nanopb
     - PromisesObjC
+    - RecaptchaInterop
     - SocketRocket
 
 EXTERNAL SOURCES:
@@ -2441,6 +2466,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/logger"
   React-Mapbuffer:
     :path: "../node_modules/react-native/ReactCommon"
+  react-native-image-picker:
+    :path: "../node_modules/react-native-image-picker"
   react-native-pager-view:
     :path: "../node_modules/react-native-pager-view"
   react-native-safe-area-context:
@@ -2489,6 +2516,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-community/masked-view"
   RNFBApp:
     :path: "../node_modules/@react-native-firebase/app"
+  RNFBAuth:
+    :path: "../node_modules/@react-native-firebase/auth"
   RNFBFirestore:
     :path: "../node_modules/@react-native-firebase/firestore"
   RNGestureHandler:
@@ -2517,6 +2546,7 @@ SPEC CHECKSUMS:
   Firebase: 0312a2352584f782ea56f66d91606891d4607f06
   FirebaseAnalytics: ec00fe8b93b41dc6fe4a28784b8e51da0647a248
   FirebaseAppCheckInterop: 5da5ce93e8797a215e3f677fb0654b74e736c8b8
+  FirebaseAuth: c0f93dcc570c9da2bffb576969d793e95c344fbb
   FirebaseCore: 7ec4d0484817f12c3373955bc87762d96842d483
   FirebaseCoreExtension: 8a47811d0b155501559ef05d089518152a0a1677
   FirebaseCoreInternal: 910a81992c33715fec9263ca7381d59ab3a750b7
@@ -2530,6 +2560,7 @@ SPEC CHECKSUMS:
   GoogleUtilities: ea963c370a38a8069cc5f7ba4ca849a60b6d7d15
   "gRPC-C++": e725ef63c4475d7cdb7e2cf16eb0fde84bd9ee51
   gRPC-Core: eee4be35df218649fe66d721a05a7f27a28f069b
+  GTMSessionFetcher: 8000756fc1c19d2e5697b90311f7832d2e33f6cd
   hermes-engine: 9cecf9953a681df7556b8cc9c74905de8f3293c0
   leveldb-library: e8eadf9008a61f9e1dde3978c086d2b6d9b9dc28
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
@@ -2556,6 +2587,7 @@ SPEC CHECKSUMS:
   React-jsinspector: 85583ef014ce53d731a98c66a0e24496f7a83066
   React-logger: 3eb80a977f0d9669468ef641a5e1fabbc50a09ec
   React-Mapbuffer: d81d930c1b7f4db284e1d721fe7fdc99230ca108
+  react-native-image-picker: 7c3a279e7a518628910f2ea02917bd3b90049465
   react-native-pager-view: 0bcba39275cec9d1a50535c3c8c29924c66b67e7
   react-native-safe-area-context: 0ee144a6170530ccc37a0fd9388e28d06f516a89
   React-nativeconfig: e700ac3ec3d66329076bd2c2787a204411815d43
@@ -2578,8 +2610,10 @@ SPEC CHECKSUMS:
   React-runtimescheduler: 4fa81221f3bb96df737d682fa828b574bea3827c
   React-utils: a45dd70919baff681d43a4a457e9884ef96b4581
   ReactCommon: e168ee1704806f10f47ee8c7f825b5850b18eaea
+  RecaptchaInterop: 7d1a4a01a6b2cb1610a47ef3f85f0c411434cb21
   RNCMaskedView: 0e1bc4bfa8365eba5fbbb71e07fbdc0555249489
   RNFBApp: 87e1cdbf128f8574283d415bc58eac36df546a6f
+  RNFBAuth: ed61486ebcb31caa7c92d6e3064773511f5f60ff
   RNFBFirestore: 974889969da6539c48d17b1e8f66e4125e3d0211
   RNGestureHandler: bbb04bccfd972fc228f7307815ccd11f47324605
   RNReanimated: 3c15d836bc232658f355d404b17e2a3f9046fe6c

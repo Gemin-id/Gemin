@@ -7,6 +7,8 @@ import RegistrationScreen from '../screen/RegistrationScreen';
 import BracketScreen from '../screen/BracketScreen';
 import PaymentScreen from '../screen/PaymentScreen';
 import ConfirmScreen from '../screen/ConfirmScreen';
+import SigninScreen from '../screen/SigninScreen';
+import SignupScreen from '../screen/SignupScreen';
 
 const Stack = createStackNavigator();
 
@@ -21,6 +23,8 @@ const HomeStack = () => {
       <Stack.Screen name="Payment" component={PaymentScreen} />
       <Stack.Screen name="Confirm" component={ConfirmScreen} />
       <Stack.Screen name="SuccesPay" component={TabNavigation} />
+      <Stack.Screen name="Signin" component={SigninScreen} />
+      <Stack.Screen name="Signup" component={SignupScreen} />
     </Stack.Navigator>
   );
 };

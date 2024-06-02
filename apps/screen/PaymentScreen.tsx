@@ -17,7 +17,7 @@ const schedule = [
 
 const PaymentScreen = () => {
 
-    const navigation = useNavigation();
+    const navigation: any = useNavigation();
 
     return (
     <ScrollView keyboardShouldPersistTaps='never' contentContainerStyle={{flexGrow: 1}}>
