@@ -132,7 +132,7 @@ const ThirdRoute = () => (
     </ScrollView>
 );
 const FourthRoute = () => {
-    const navigation = useNavigation();
+    const navigation: any = useNavigation();
     const isRegistrationClosed = participants[0].currentParticipants === participants[0].totalParticipants;
     
     return (
@@ -187,9 +187,9 @@ const renderScene = SceneMap({
     fourth: FourthRoute,
 });
 
-const TournamentInfo = ({ route }) => {
+const TournamentInfo = ({ route }: any) => {
     const { imageUri, title, status } = route.params;
-    const navigation = useNavigation();
+    const navigation: any = useNavigation();
     const handleRegisPress = () => {
         navigation.navigate('Registration');
       };

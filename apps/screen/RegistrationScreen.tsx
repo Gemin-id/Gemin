@@ -21,7 +21,7 @@ export default function RegistrationScreen() {
         setTeamMembers(updatedMembers);
     };
 
-    const navigation = useNavigation();
+    const navigation: any = useNavigation();
 
     return (
         <ScrollView keyboardShouldPersistTaps='never' contentContainerStyle={{flexGrow: 1}}>

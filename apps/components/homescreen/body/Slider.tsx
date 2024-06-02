@@ -12,7 +12,7 @@ interface SlideItem {
 }
 
 const Slider: React.FC = () => {
-  const navigation = useNavigation();
+  const navigation: any = useNavigation();
   const [tournaments, setTournaments] = useState<SlideItem[]>([]);
 
   const getData = async () => {

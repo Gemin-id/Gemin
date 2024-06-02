@@ -1,8 +1,59 @@
-import React from 'react';
-import Header from '../components/homescreen/Header';
-import { StyleSheet, Text, View, SafeAreaView, Image, ScrollView, TouchableOpacity } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, Text, View, SafeAreaView, Image, ScrollView, TouchableOpacity, Alert } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import auth from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
 
-const ProfileScreen = () => {
+const ProfileScreen: React.FC = () => {
+  const [userData, setUserData] = useState<any>(null);
+  const navigation: any = useNavigation();
+
+  useEffect(() => {
+    const user = auth().currentUser;
+    if (user) {
+      const userDocRef = firestore().collection('users').doc(user.uid);
+      userDocRef.get()
+        .then(documentSnapshot => {
+          if (documentSnapshot.exists) {
+            setUserData(documentSnapshot.data());
+          }
+        })
+        .catch(error => {
+          console.error("Error fetching user data: ", error);
+          Alert.alert("Error", "Failed to load user data");
+        });
+    } else {
+      // Navigate to Signin screen if user is not authenticated
+      navigation.navigate('Signin');
+    }
+  }, []);
+
+  const handleLogout = () => {
+    auth().signOut()
+      .then(() => {
+        navigation.reset({
+          index: 0,
+          routes: [{ name: 'Signin' }],
+        });
+      })
+      .catch(error => {
+        console.error("Error signing out: ", error);
+        Alert.alert("Error", "Failed to log out");
+      });
+  };
+
+  const handleBackToMain = () => {
+    navigation.navigate('Main');
+  };
+
+  if (!userData) {
+    return (
+      <SafeAreaView style={styles.container}>
+        <Text style={styles.text}>Loading...</Text>
+      </SafeAreaView>
+    );
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -12,28 +63,28 @@ const ProfileScreen = () => {
           </View>
         </View>
         <View style={{ alignItems: 'center' }}>
-          <Text style={[styles.text, { fontSize: 20, marginTop: -40 }]}>username</Text>
+          <Text style={[styles.text, { fontSize: 20, marginTop: -40 }]}>{userData.username}</Text>
         </View>
         <View style={{ alignItems: 'center' }}>
           <View style={styles.middleSectionTextContainer}>
             <View style={styles.middleSectionText}>
               <Text style={styles.toptext}>Name</Text>
-              <Text style={styles.bottomtext}>User Name</Text>
+              <Text style={styles.bottomtext}>{userData.name}</Text>
             </View>
           </View>
           <View style={styles.middleSectionTextContainer}>
             <View style={styles.middleSectionText}>
               <Text style={styles.toptext}>Phone Number</Text>
-              <Text style={styles.bottomtext}>+62818181818</Text>
+              <Text style={styles.bottomtext}>{userData.phone}</Text>
             </View>
           </View>
           <View style={styles.middleSectionTextContainer}>
             <View style={styles.middleSectionText}>
               <Text style={styles.toptext}>Email</Text>
-              <Text style={styles.bottomtext}>user@name.com</Text>
+              <Text style={styles.bottomtext}>{userData.email}</Text>
             </View>
           </View>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={handleLogout}>
             <View style={styles.buttonContainer}>
               <View style={styles.button}>
                 <Text style={styles.texts}>Log Out</Text>
@@ -52,7 +103,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#1E293B'
   },
   text: {
-    fontFamily: 'DN Sans',
+    fontFamily: 'DM Sans',
     fontWeight: '700',
     color: '#FFFFFF',
   },
