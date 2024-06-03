@@ -1,61 +1,60 @@
-import React, { useEffect, useState } from 'react'
-import Header from '../components/homescreen/Header'
-import { collection, getDocs, getFirestore } from "firebase/firestore";
-import { Ionicons, MaterialIcons } from '@expo/vector-icons';
-import { StyleSheet, Text, View, SafeAreaView, Image, ScrollView, TouchableOpacity } from 'react-native';
-import { AntDesign } from '@expo/vector-icons';
+import React from 'react';
+import { Ionicons, MaterialIcons, AntDesign } from '@expo/vector-icons';
+import { StyleSheet, Text, View, SafeAreaView, ScrollView, TouchableOpacity } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 
 const ConfirmScreen = () => {
-    const navigation = useNavigation();
+    const navigation : any = useNavigation();
+    const route = useRoute();
+    const { totalCost } : any = route.params;
 
     return (
         <SafeAreaView style={styles.container}>
             <KeyboardAwareScrollView style={{ backgroundColor: '#1E293B' }}
-            resetScrollToCoords={{ x: 0, y: 0 }}
-            contentContainerStyle={styles.container}
-            scrollEnabled={true}>
-            <ScrollView showsVerticalScrollIndicator={false}>
-                <View style={{alignItems: 'center', marginTop: 25}}>
-                    <View style={styles.middleSectionTextContainer}>
-                        <View style={styles.middleSectionText}>
-                            <Text style={styles.toptext}>Bank Name</Text>
-                            <Text style={styles.bottomtext}>Bank Central Asia (BCA)</Text>
+                resetScrollToCoords={{ x: 0, y: 0 }}
+                contentContainerStyle={styles.container}
+                scrollEnabled={true}>
+                <ScrollView showsVerticalScrollIndicator={false}>
+                    <View style={{ alignItems: 'center', marginTop: 25 }}>
+                        <View style={styles.middleSectionTextContainer}>
+                            <View style={styles.middleSectionText}>
+                                <Text style={styles.toptext}>Bank Name</Text>
+                                <Text style={styles.bottomtext}>Bank Central Asia (BCA)</Text>
+                            </View>
                         </View>
-                    </View>
-                    <View style={styles.middleSectionTextContainer}>
-                        <View style={styles.middleSectionText}>
-                            <Text style={styles.toptext}>Account Holder’s Name</Text>
-                            <Text style={styles.bottomtext}>Gemin</Text>
+                        <View style={styles.middleSectionTextContainer}>
+                            <View style={styles.middleSectionText}>
+                                <Text style={styles.toptext}>Account Holder’s Name</Text>
+                                <Text style={styles.bottomtext}>Gemin</Text>
+                            </View>
                         </View>
-                    </View>
-                    <View style={styles.middleSectionTextContainer}>
-                        <View style={styles.middleSectionText}>
-                            <Text style={styles.toptext}>Account Number</Text>
-                            <Text style={styles.bottomtext}>001122334455</Text>
+                        <View style={styles.middleSectionTextContainer}>
+                            <View style={styles.middleSectionText}>
+                                <Text style={styles.toptext}>Account Number</Text>
+                                <Text style={styles.bottomtext}>001122334455</Text>
+                            </View>
                         </View>
-                    </View>
-                    <View style={styles.middleSectionTextContainer}>
-                        <View style={styles.middleSectionText}>
-                            <Text style={styles.toptext}>Transfer Amount</Text>
-                            <Text style={styles.bottomtext}>Rp15.011</Text>
+                        <View style={styles.middleSectionTextContainer}>
+                            <View style={styles.middleSectionText}>
+                                <Text style={styles.toptext}>Transfer Amount</Text>
+                                <Text style={styles.bottomtext}>Rp{totalCost.toLocaleString()}</Text>
+                            </View>
                         </View>
-                    </View>
-                    <View style={styles.sectionContainer}>
-                        <View style={styles.warningText}>
-                            <AntDesign name="warning" size={24} color="#ffffff"/>
-                            <Text style={styles.toptext}>   </Text>
-                            <Text style={{fontSize: 12, color: '#ffffff', }}>Transfer before February 27, 2024 13.00 or your transaction will automatically be canceled by our system.</Text>
+                        <View style={styles.sectionContainer}>
+                            <View style={styles.warningText}>
+                                <AntDesign name="warning" size={24} color="#ffffff" />
+                                <Text style={styles.toptext}>   </Text>
+                                <Text style={{ fontSize: 12, color: '#ffffff', }}>Transfer before February 27, 2024 13.00 or your transaction will automatically be canceled by our system.</Text>
+                            </View>
                         </View>
+                        <TouchableOpacity style={styles.floatingButton} onPress={() => navigation.navigate('SuccesPay')}>
+                            <Text style={styles.buttonText}>Confirm Payment</Text>
+                        </TouchableOpacity>
                     </View>
-                    <TouchableOpacity style={styles.floatingButton} onPress={() => navigation.navigate('SuccesPay') }>
-                        <Text style={styles.buttonText}>Confirm Payment</Text>
-                    </TouchableOpacity>
-                </View>
-            </ScrollView>
+                </ScrollView>
             </KeyboardAwareScrollView>
-        </SafeAreaView>    
+        </SafeAreaView>
     );
 }
 
@@ -75,7 +74,6 @@ const styles = StyleSheet.create({
     middleSectionText: {
         flexDirection: 'column',
         justifyContent: 'space-between',
-        
     },
     toptext: {
         color: '#FFFFFF',
@@ -141,4 +139,4 @@ const styles = StyleSheet.create({
     },
 })
 
-export default ConfirmScreen
+export default ConfirmScreen;

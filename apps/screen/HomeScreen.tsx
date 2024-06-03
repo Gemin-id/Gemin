@@ -1,8 +1,8 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import Header from '../components/homescreen/Header';
-import Slider from '../components/homescreen/body/Slider';
-import VerticalImageList from '../components/homescreen/body/Vertical';
+import Slider from '../components/homescreen/Slider';
+import VerticalImageList from '../components/homescreen/Vertical';
 
 const HomeScreen = () => {
     return (

@@ -49,12 +49,6 @@ const team = [
     { id: '8', teamName: 'Team H' }
 ];
 
-const price = [
-    'Rp25.000',
-    'Rp15.000',
-    'Rp10.000',
-];
-
 interface ParticipantCardProps {
     teamName: string;
   }
@@ -188,11 +182,17 @@ const renderScene = SceneMap({
 });
 
 const TournamentInfo = ({ route }: any) => {
-    const { imageUri, title, status } = route.params;
+    const { imageUri, title, status, price, tourDate, tourTime,} = route.params;
     const navigation: any = useNavigation();
     const handleRegisPress = () => {
-        navigation.navigate('Registration');
-      };
+        navigation.navigate('Registration', { 
+            imageUri, 
+            title,
+            tourDate,
+            tourTime,
+            price
+        });
+    };
 
     const layout = useWindowDimensions();
     const [index, setIndex] = React.useState(0);
@@ -215,17 +215,15 @@ const TournamentInfo = ({ route }: any) => {
                 <StatusBox isRegistrationClosed={isRegistrationClosed} />
                 <View style={styles.tournamentHeading}>
                     <View>
-                        {tournament.map((item, index) => (
-                            <View key={index}>
-                                <Text style={styles.title}>{title}</Text>
-                                <View style={styles.timeContainer}>
-                                    <AntDesign name="calendar" size={17} color="#ffffff" />
-                                    <Text style={[styles.time, { marginLeft: 3 }, { marginRight: 8 }]}>{item.tournamentDate}</Text>
-                                    <Ionicons name="time" size={17} color="#ffffff" />
-                                    <Text style={[styles.time, { marginLeft: 2 }]}>{item.tournamentTime}</Text>
-                                </View>
+                        <View key={index}>
+                            <Text style={styles.title}>{title}</Text>
+                            <View style={styles.timeContainer}>
+                                <AntDesign name="calendar" size={17} color="#ffffff" />
+                                <Text style={[styles.time, { marginLeft: 3 }, { marginRight: 8 }]}>{tourDate}</Text>
+                                <Ionicons name="time" size={17} color="#ffffff" />
+                                <Text style={[styles.time, { marginLeft: 2 }]}>{tourTime}</Text>
                             </View>
-                        ))}
+                        </View>
                     </View>
                     {participants.map((item, index) => (
                         <View key={index} style={styles.participantContainer}>
@@ -258,7 +256,7 @@ const TournamentInfo = ({ route }: any) => {
                     onPress={handleRegisPress}
                     disabled={isRegistrationClosed}
                     buttonText='Register Now'
-                    price={price[1]}
+                    price={price.toLocaleString()}
                 />
             </View>
         </View>

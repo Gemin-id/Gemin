@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, SafeAreaView, Image, ScrollView, TouchableOpacity, Alert } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, Image, ScrollView, TouchableOpacity, Alert, PermissionsAndroid } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
+import storage from '@react-native-firebase/storage';
+import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 
 const ProfileScreen: React.FC = () => {
   const [userData, setUserData] = useState<any>(null);
+  const [uploading, setUploading] = useState(false);
+  const [imageUri, setImageUri] = useState<string | null>(null);
   const navigation: any = useNavigation();
 
   useEffect(() => {
@@ -15,7 +19,11 @@ const ProfileScreen: React.FC = () => {
       userDocRef.get()
         .then(documentSnapshot => {
           if (documentSnapshot.exists) {
-            setUserData(documentSnapshot.data());
+            const data = documentSnapshot.data();
+            setUserData(data);
+            if (data?.profileImage) {
+              setImageUri(data.profileImage);
+            }
           }
         })
         .catch(error => {
@@ -23,7 +31,6 @@ const ProfileScreen: React.FC = () => {
           Alert.alert("Error", "Failed to load user data");
         });
     } else {
-      // Navigate to Signin screen if user is not authenticated
       navigation.navigate('Signin');
     }
   }, []);
@@ -42,8 +49,49 @@ const ProfileScreen: React.FC = () => {
       });
   };
 
-  const handleBackToMain = () => {
-    navigation.navigate('Main');
+  const handleImagePicker = async () => {
+    const options = {
+      mediaType: 'photo',
+      quality: 1,
+    };
+
+    const result = await launchImageLibrary(options);
+
+    if (result.didCancel) {
+      console.log('User cancelled image picker');
+    } else if (result.error) {
+      console.log('ImagePicker Error: ', result.error);
+    } else if (result.assets && result.assets.length > 0) {
+      const source = result.assets[0].uri;
+      if (source) {
+        setImageUri(source);
+        uploadImage(source);
+      }
+    }
+  };
+
+  const uploadImage = async (uri: string) => {
+    const user = auth().currentUser;
+    if (!user) return;
+
+    setUploading(true);
+    const filename = uri.substring(uri.lastIndexOf('/') + 1);
+    const storageRef = storage().ref(`profile_pictures/${user.uid}/${filename}`);
+    const task = storageRef.putFile(uri);
+
+    try {
+      await task;
+      const url = await storageRef.getDownloadURL();
+      await firestore().collection('users').doc(user.uid).update({ profileImage: url });
+      setUserData({ ...userData, profileImage: url });
+      setImageUri(url);
+      setUploading(false);
+      Alert.alert('Image uploaded successfully!');
+    } catch (e) {
+      console.error('Error uploading image: ', e);
+      Alert.alert('Error uploading image', e.message);
+      setUploading(false);
+    }
   };
 
   if (!userData) {
@@ -58,9 +106,9 @@ const ProfileScreen: React.FC = () => {
     <SafeAreaView style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={{ alignSelf: 'center' }}>
-          <View style={styles.profileImage}>
-            <Image source={require('../../assets/profile.png')} style={styles.image} resizeMode="center" />
-          </View>
+          <TouchableOpacity style={styles.profileImage} onPress={handleImagePicker}>
+            <Image source={imageUri ? { uri: imageUri } : require('../../assets/profile.png')} style={styles.image} resizeMode="center" />
+          </TouchableOpacity>
         </View>
         <View style={{ alignItems: 'center' }}>
           <Text style={[styles.text, { fontSize: 20, marginTop: -40 }]}>{userData.username}</Text>
@@ -95,7 +143,7 @@ const ProfileScreen: React.FC = () => {
       </ScrollView>
     </SafeAreaView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -116,7 +164,8 @@ const styles = StyleSheet.create({
     width: 200,
     height: 200,
     borderRadius: 100,
-    overflow: 'hidden'
+    overflow: 'hidden',
+    marginBottom: 10,
   },
   middleSectionTextContainer: {
     flexDirection: 'row',

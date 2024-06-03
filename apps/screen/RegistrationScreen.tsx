@@ -1,20 +1,18 @@
-import { View, Text, Image, StyleSheet, Dimensions, TouchableOpacity, TextInput, ScrollView, Keyboard, TouchableWithoutFeedback } from 'react-native';
+import { View, Text, Image, StyleSheet, Dimensions, TouchableOpacity, TextInput, ScrollView, Keyboard, TouchableWithoutFeedback, Alert } from 'react-native';
 import React, { useState } from 'react';
 import LinearGradient from 'react-native-linear-gradient';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { AntDesign } from '@expo/vector-icons';
-import { Ionicons } from '@expo/vector-icons';
-import { Entypo } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
-
+import { AntDesign, Ionicons, Entypo } from '@expo/vector-icons';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import firestore from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
 
 const screenWidth = Dimensions.get('window').width;
-
 
 export default function RegistrationScreen() {
     const [teamName, setTeamName] = useState('');
     const [teamMembers, setTeamMembers] = useState(['', '', '', '', '']);
-
+    
     const handleMemberChange = (text: string, index: number) => {
         const updatedMembers = [...teamMembers];
         updatedMembers[index] = text;
@@ -22,6 +20,37 @@ export default function RegistrationScreen() {
     };
 
     const navigation: any = useNavigation();
+    const route: any = useRoute();
+    const { imageUri, title, tourDate, tourTime, price } = route.params;
+
+    const handleRegistration = async () => {
+        const user = auth().currentUser;
+        if (!user) {
+            Alert.alert('Anda Belum Mendaftarkan Akun');
+            return;
+        }
+    
+        if (!teamName || teamMembers.some(member => member === '')) {
+            Alert.alert('Error', 'Please fill in all fields');
+            return;
+        }
+    
+        try {
+            await firestore().collection('participants').add({
+                teamName,
+                teamMembers,
+                title,
+                tourDate,
+                tourTime,
+                userId: user.uid,
+            });
+            Alert.alert('Success', 'Registration successful');
+            navigation.navigate('Payment', { teamName, teamMembers, title, tourDate, tourTime, price});
+        } catch (error) {
+            console.error("Error adding document: ", error);
+            Alert.alert('Error', 'Failed to register');
+        }
+    };    
 
     return (
         <ScrollView keyboardShouldPersistTaps='never' contentContainerStyle={{flexGrow: 1}}>
@@ -32,19 +61,19 @@ export default function RegistrationScreen() {
             <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
                 <View>
                 <View style={styles.imageContainer}>
-                    <Image source={{uri: 'https://us.v-cdn.net/6036147/uploads/GOQOTHGYG807/l-18-1-1200x675.jpg'}} style={styles.image} />
+                    <Image source={{uri: imageUri}} style={styles.image} />
                     <LinearGradient colors={['transparent', '#1E293B']} style={styles.gradient} start={{ x: 0.5, y: 0 }} end={{ x: 0.5, y: 1 }} />
                 </View>
                 <View style={{height: 8}} />
                 <View style={styles.innerContainer}>
                     <View style={styles.tournamentHeading}>
                         <View>
-                            <Text style={styles.title}>Pixel Power 2024</Text>
+                            <Text style={styles.title}>{title}</Text>
                             <View style={styles.timeContainer}>
                                 <AntDesign name="calendar" size={17} color="#ffffff" />
-                                <Text style={[styles.time, {marginLeft: 3, marginRight: 8}]}>January 1st, 2024</Text>
+                                <Text style={[styles.time, {marginLeft: 3, marginRight: 8}]}>{tourDate}</Text>
                                 <Ionicons name="time" size={17} color="#ffffff" />
-                                <Text style={[styles.time, {marginLeft: 2}]}>13.00</Text>
+                                <Text style={[styles.time, {marginLeft: 2}]}>{tourTime}</Text>
                             </View>
                         </View>
                     </View>
@@ -79,10 +108,10 @@ export default function RegistrationScreen() {
             <View>
             <TouchableOpacity 
                 style={styles.floatingButton}
-                onPress={() => navigation.navigate('Payment')}
+                onPress={handleRegistration}
             >
                 <Text style={styles.buttonText}>Register Now!</Text>
-                <Text style={[styles.buttonText, {color: '#EADE75', fontSize: 20}]}>Rp15.000</Text>
+                <Text style={[styles.buttonText, {color: '#EADE75', fontSize: 20}]}>Rp{price.toLocaleString()}</Text>
             </TouchableOpacity>
             </View>
             </View> 

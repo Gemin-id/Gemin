@@ -4,7 +4,7 @@ import { TouchableOpacity, Text, View, StyleSheet } from 'react-native';
 interface FloatingButtonProps {
     onPress: () => void;
     disabled: boolean;
-    price?: string;
+    price?: number;
     buttonText: string;
     justifyContent?: 'space-between' | 'center';
 }
@@ -20,7 +20,7 @@ const FloatingButton = ({ onPress, disabled, price, buttonText, justifyContent =
             onPress={onPress}
         >
             <Text style={{ ...styles.buttonText, fontSize: 15, color: '#ffffff', fontWeight: 'bold' }}>{buttonText}</Text>
-            {price && <Text style={{ ...styles.buttonText, fontSize: 20, color: '#EADE75', fontWeight: 'bold' }}>{price}</Text>}
+            {price && <Text style={{ ...styles.buttonText, fontSize: 20, color: '#EADE75', fontWeight: 'bold' }}>Rp{price}</Text>}
             {disabled && <View style={styles.disabledOverlay} />}
         </TouchableOpacity>
     );

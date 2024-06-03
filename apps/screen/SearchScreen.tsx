@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import Header from '../components/homescreen/Header';
 import BodySearch from '../components/searchScreen/BodySearch';
-import VerticalImageList from '../components/homescreen/body/Vertical';
+import VerticalImageList from '../components/homescreen/Vertical';
 
 //bisa pakai algoria, typesense
 

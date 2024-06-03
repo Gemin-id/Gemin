@@ -5,7 +5,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 
 export default function Header() {
-  const navigation = useNavigation();
+  const navigation: any = useNavigation();
 
   const handleProfilePress = () => {
     navigation.navigate('Profile');

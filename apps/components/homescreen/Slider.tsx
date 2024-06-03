@@ -9,6 +9,9 @@ interface SlideItem {
   title?: string;
   time?: string;
   status?: string;
+  price?: string;
+  tourDate?: string;
+  tourTime?: string;
 }
 
 const Slider: React.FC = () => {
@@ -36,7 +39,7 @@ const Slider: React.FC = () => {
 
   const renderItem = ({ item }: { item: SlideItem }) => {
     const handlePress = () => {
-      navigation.navigate('TournamentInfo', { imageUri: item.imageUri, title: item.title, status: item.status });
+      navigation.navigate('TournamentInfo', { imageUri: item.imageUri, title: item.title, status: item.status, price: item.price, tourDate: item.tourDate, tourTime: item.tourTime });
     };
 
     return (

@@ -12,6 +12,7 @@ interface VerticalItem {
   battle?: string;
   prizePool?: string;
   status?: string;
+  price?: string;
 }
 
 const VerticalImageList = ({ category }: { category: string }) => {
@@ -30,6 +31,9 @@ const VerticalImageList = ({ category }: { category: string }) => {
         battle: doc.data().battle,
         prizePool: doc.data().prizepool,
         status: doc.data().status,
+        price: doc.data().price,
+        tourDate: doc.data().tourDate,
+        tourTime: doc.data().tourTime,
       }));
       setTournaments(fetchedTournaments);
     } catch (error) {
@@ -43,7 +47,7 @@ const VerticalImageList = ({ category }: { category: string }) => {
 
   const renderItem = ({ item }: { item: VerticalItem }) => {
     const handlePress = () => {
-      navigation.navigate('TournamentInfo', { imageUri: item.imageUri, title: item.title, status: item.status });
+      navigation.navigate('TournamentInfo', { imageUri: item.imageUri, title: item.title, status: item.status, price: item.price, tourDate: item.tourDate, tourTime: item.tourTime});
     };
 
     return (
