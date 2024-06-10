@@ -36,16 +36,20 @@ export default function RegistrationScreen() {
         }
     
         try {
-            await firestore().collection('participants').add({
+            // Generate a unique document ID using the title and current timestamp
+            const documentId = `${title}-${new Date().getTime()}`;
+    
+            await firestore().collection('participants').doc(documentId).set({
                 teamName,
                 teamMembers,
                 title,
                 tourDate,
                 tourTime,
                 userId: user.uid,
+                status: 'belum bayar', // Tambahkan status 'belum bayar'
             });
-            Alert.alert('Success', 'Registration successful');
-            navigation.navigate('Payment', { teamName, teamMembers, title, tourDate, tourTime, price});
+    
+            navigation.navigate('Payment', { teamName, teamMembers, title, tourDate, tourTime, price });
         } catch (error) {
             console.error("Error adding document: ", error);
             Alert.alert('Error', 'Failed to register');

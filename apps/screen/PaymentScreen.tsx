@@ -25,6 +25,19 @@ const PaymentScreen = () => {
 
     const totalCost = schedule.reduce((total, item) => total + item.cost  , 0);
 
+    const handlePayment = async () => {
+        try {
+            await firestore().collection('participants').doc(documentId).update({
+                status: 'sedang melakukan pembayaran',
+            });
+
+            navigation.navigate('Confirm', { totalCost, documentId });
+        } catch (error) {
+            console.error("Error updating document: ", error);
+            Alert.alert('Error', 'Failed to proceed with payment');
+        }
+    };
+
     return (
         <ScrollView keyboardShouldPersistTaps='never' contentContainerStyle={{flexGrow: 1}}>
             <KeyboardAwareScrollView style={{ backgroundColor: '#1E293B' }}
