@@ -13,6 +13,7 @@ interface VerticalItem {
   prizePool?: string;
   status?: string;
   price?: string;
+  category?: string;
 }
 
 const VerticalImageList = ({ category }: { category: string }) => {
@@ -34,6 +35,7 @@ const VerticalImageList = ({ category }: { category: string }) => {
         price: doc.data().price,
         tourDate: doc.data().tourDate,
         tourTime: doc.data().tourTime,
+        category: doc.data().category,
       }));
       setTournaments(fetchedTournaments);
     } catch (error) {
@@ -47,9 +49,17 @@ const VerticalImageList = ({ category }: { category: string }) => {
 
   const renderItem = ({ item }: { item: VerticalItem }) => {
     const handlePress = () => {
-      navigation.navigate('TournamentInfo', { imageUri: item.imageUri, title: item.title, status: item.status, price: item.price, tourDate: item.tourDate, tourTime: item.tourTime});
+      navigation.navigate('TournamentInfo', {
+        imageUri: item.imageUri,
+        title: item.title,
+        status: item.status,
+        price: item.price,
+        tourDate: item.tourDate,
+        tourTime: item.tourTime,
+        category: item.category // Include category here
+      });
     };
-
+  
     return (
       <TouchableOpacity onPress={handlePress} style={styles.tournamentContainer}>
         <View>
@@ -76,6 +86,7 @@ const VerticalImageList = ({ category }: { category: string }) => {
       </TouchableOpacity>
     );
   };
+  
 
   const calculateNumColumns = () => {
     // Calculate the number of columns based on the screen width

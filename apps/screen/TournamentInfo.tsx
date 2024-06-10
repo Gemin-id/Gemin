@@ -22,7 +22,7 @@ const overview = [
 ];
 
 const participants = [
-    { currentParticipants: '7', totalParticipants: '8' },
+    { currentParticipants: '8', totalParticipants: '8' },
 ];
 
 const schedule = [
@@ -60,7 +60,7 @@ const ParticipantCard = ({ teamName }: ParticipantCardProps) => (
     </View>
 );
 
-const FirstRoute = () => (
+const FirstRoute = ({ category }: any) => (
     <ScrollView style={styles.scene}>
         <View style={styles.tabOverview}>
             <View style={{ marginRight: 45 }}>
@@ -71,7 +71,7 @@ const FirstRoute = () => (
             <View>
                 {overview.map((item, index) => (
                     <View key={index}>
-                        <Text style={styles.tabContentDesc}>{item.game}</Text>
+                        <Text style={styles.tabContentDesc}>{category}</Text>
                         <Text style={styles.tabContentDesc}>{item.organizer}</Text>
                         <Text style={styles.tabContentDesc}>{item.tournamentFormat}</Text>
                     </View>
@@ -182,7 +182,7 @@ const renderScene = SceneMap({
 });
 
 const TournamentInfo = ({ route }: any) => {
-    const { imageUri, title, status, price, tourDate, tourTime,} = route.params;
+    const { imageUri, title, status, price, tourDate, tourTime, category} = route.params;
     const navigation: any = useNavigation();
     const handleRegisPress = () => {
         navigation.navigate('Registration', { 
@@ -234,7 +234,20 @@ const TournamentInfo = ({ route }: any) => {
                 </View>
                 <TabView
                     navigationState={{ index, routes }}
-                    renderScene={renderScene}
+                    renderScene={({ route }) => {
+                        switch (route.key) {
+                          case 'first':
+                            return <FirstRoute category={category} />; // Pass category to FirstRoute
+                          case 'second':
+                            return <SecondRoute />;
+                          case 'third':
+                            return <ThirdRoute />;
+                          case 'fourth':
+                            return <FourthRoute />;
+                          default:
+                            return null;
+                        }
+                      }}                    
                     onIndexChange={setIndex}
                     initialLayout={{ width: layout.width }}
                     renderTabBar={props => (
