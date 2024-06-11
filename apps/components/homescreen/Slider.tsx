@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Image, FlatList, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import firestore from '@react-native-firebase/firestore';
+import LinearGradient from 'react-native-linear-gradient';
 
 interface SlideItem {
   id: string;
@@ -47,6 +48,7 @@ const Slider: React.FC = () => {
       <TouchableOpacity onPress={handlePress}>
         <View style={styles.slideContainer}>
           <Image source={{ uri: item.imageUri }} style={styles.image} />
+          <LinearGradient colors={['transparent', '#000000']} style={styles.gradient} start={{ x: 0.5, y: 0 }} end={{ x: 0.5, y: 1 }} />
           {item.title && <Text style={styles.title}>{item.title}</Text>}
           {item.time && <Text style={styles.description}>{item.time}</Text>}
           <View style={styles.statusContainer}>
@@ -84,13 +86,15 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   slideContainer: {
+    marginTop: 5,
     marginRight: 4,
-    marginLeft: 8,
+    marginLeft: 5,
     alignItems: 'center',
     borderRadius: 20,
     width: 300,
     height: 158,
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    overflow: 'hidden',
   },
   image: {
     borderRadius: 20,
@@ -99,7 +103,7 @@ const styles = StyleSheet.create({
   },
   title: {
     position: 'absolute',
-    bottom: 38,
+    bottom: 30,
     left: 16,
     color: 'white',
     fontSize: 16,
@@ -107,7 +111,7 @@ const styles = StyleSheet.create({
   },
   description: {
     position: 'absolute',
-    bottom: 20,
+    bottom: 10,
     left: 16,
     color: 'white',
     fontSize: 12,
@@ -129,6 +133,13 @@ const styles = StyleSheet.create({
     color: 'white',
     alignItems: 'center',
     fontWeight: 'bold',
+  },
+  gradient: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: 0,
+    height: '50%',
   },
 });
 
