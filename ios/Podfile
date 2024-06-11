@@ -40,8 +40,7 @@ end
 target 'Gemin' do
   use_expo_modules!
   config = use_native_modules!
-  pod 'Firebase/Core'
-  pod 'Firebase/Firestore'
+
   pod 'Firebase', :modular_headers => true
   pod 'FirebaseCoreInternal', :modular_headers => true
   pod 'GoogleUtilities', :modular_headers => true
@@ -49,6 +48,9 @@ target 'Gemin' do
   pod 'FirebaseFirestore', :modular_headers => true
   pod 'FirebaseCoreExtension', :modular_headers => true
   pod 'FirebaseFirestoreInternal', :modular_headers => true
+  pod 'FirebaseStorage', :modular_headers => true
+  pod 'FirebaseAppCheckInterop', :modular_headers => true
+  pod 'FirebaseAuthInterop', :modular_headers => true
 
   use_frameworks! :linkage => podfile_properties['ios.useFrameworks'].to_sym if podfile_properties['ios.useFrameworks']
   use_frameworks! :linkage => ENV['USE_FRAMEWORKS'].to_sym if ENV['USE_FRAMEWORKS']
