@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "714121162418",
+    "project_id": "gemin-cdb93",
+    "storage_bucket": "gemin-cdb93.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:714121162418:android:17fb9e6c6ca50426e663ab",
+        "android_client_info": {
+          "package_name": "com.anonymous.Gemin"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCmEIC4-RbXgj7oop0uRJ1mDkaT3b3Ed3A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
