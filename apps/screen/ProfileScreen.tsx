@@ -111,7 +111,7 @@ const ProfileScreen: React.FC = () => {
           </TouchableOpacity>
         </View>
         <View style={{ alignItems: 'center' }}>
-          <Text style={[styles.text, { fontSize: 20, marginTop: -40 }]}>{userData.username}</Text>
+          <Text style={[styles.text, { fontSize: 20, marginTop: 0 }]}>{userData.username}</Text>
         </View>
         <View style={{ alignItems: 'center' }}>
           <View style={styles.middleSectionTextContainer}>
@@ -157,12 +157,10 @@ const styles = StyleSheet.create({
   },
   image: {
     flex: 1,
-    height: undefined,
-    width: undefined,
   },
   profileImage: {
-    width: 200,
-    height: 200,
+    width: 100,
+    height: 100,
     borderRadius: 100,
     overflow: 'hidden',
     marginBottom: 10,
