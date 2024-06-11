@@ -8,19 +8,16 @@ import VerticalImageList from '../components/homescreen/Vertical';
 
 const SearchScreen = () => {
     return (
-        <ScrollView style={styles.container}>
+        <View style={styles.container}>
             <Header />
-            <View>
-                <BodySearch />
-                <VerticalImageList category="Mobile Legends"  />
-                <VerticalImageList category="Valorant"  />
-            </View>
-        </ScrollView>
+            <BodySearch />
+        </View>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
+        flex: 1,
         backgroundColor: '#1E293B', // Set background color
     },
 });

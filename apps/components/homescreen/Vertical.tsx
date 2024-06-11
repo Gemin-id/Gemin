@@ -14,6 +14,8 @@ interface VerticalItem {
   status?: string;
   price?: string;
   category?: string;
+  tourDate?: string;
+  tourTime?: string;
 }
 
 const VerticalImageList = ({ category }: { category: string }) => {
@@ -108,7 +110,7 @@ const VerticalImageList = ({ category }: { category: string }) => {
         numColumns={numColumns}
         columnWrapperStyle={styles.columnWrapper}
         showsHorizontalScrollIndicator={false}
-        contentContainerStyle={{ paddingLeft: 10, paddingRight: 10, paddingBottom: 10 }}
+        contentContainerStyle={styles.listContentContainer}
       />
       <View style={{ height: 0 }} />
     </View>
@@ -118,7 +120,13 @@ const VerticalImageList = ({ category }: { category: string }) => {
 const styles = StyleSheet.create({
   container: {
     marginTop: 10,
+    marginBottom: 10,
     flex: 1,
+  },
+  listContentContainer: {
+    paddingLeft: 10,
+    paddingRight: 10,
+    paddingBottom: 10,
   },
   tournamentContainer: {
     flex: 1,
@@ -154,7 +162,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: 'white',
     marginLeft: 20,
-    marginBottom: 12,
   },
   gradient: {
     position: 'absolute',

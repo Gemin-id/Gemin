@@ -1,8 +1,13 @@
 import React, { useRef, useState } from 'react';
-import { View, StyleSheet, ScrollView, Animated, Dimensions, TouchableWithoutFeedback, StatusBar } from 'react-native';
+import { View, StyleSheet, FlatList, Animated, Dimensions, TouchableWithoutFeedback, StatusBar } from 'react-native';
 import Header from '../components/homescreen/Header';
 import Slider from '../components/homescreen/Slider';
 import VerticalImageList from '../components/homescreen/Vertical';
+
+const categories = [
+  { key: 'Mobile Legends' },
+  { key: 'Valorant' }
+];
 import NotificationScreen from './NotificationScreen';
 
 const HomeScreen = () => {
@@ -48,12 +53,15 @@ const HomeScreen = () => {
         <StatusBar translucent backgroundColor="transparent" />
   
         <Header openSidebar={openSidebar} />
-        <ScrollView>
-          <Slider />
-          <VerticalImageList category="Mobile Legends" />
-          <VerticalImageList category="Valorant" />
-        </ScrollView>
-  
+        
+        <FlatList
+        ListHeaderComponent={<Slider />}
+        data={categories}
+        renderItem={renderVerticalImageList}
+        keyExtractor={(item) => item.key}
+        contentContainerStyle={styles.contentContainer}
+      />
+
         {isSidebarOpen && (
           <>
             <TouchableWithoutFeedback onPress={closeSidebar}>
@@ -84,6 +92,14 @@ const HomeScreen = () => {
       backgroundColor: 'rgba(0, 0, 0, 0.7)',
       zIndex: 10,
     },
+    contentContainer: {
+        paddingLeft: 10,
+        paddingRight: 10,
+        paddingBottom: 10,
+      },
   });
+  const renderVerticalImageList = ({ item }) => (
+    <VerticalImageList category={item.key} />
+  );
 
 export default HomeScreen;
