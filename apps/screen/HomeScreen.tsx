@@ -1,24 +1,25 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { View, StyleSheet, ScrollView } from 'react-native';
 import Header from '../components/homescreen/Header';
 import Slider from '../components/homescreen/Slider';
 import VerticalImageList from '../components/homescreen/Vertical';
 
 const HomeScreen = () => {
     return (
-        <ScrollView style={styles.container}>
+        <View style={styles.container}>
             <Header />
-            <View>
+            <ScrollView>
                 <Slider />
                 <VerticalImageList category="Mobile Legends" />
                 <VerticalImageList category="Valorant" />
-            </View>
-        </ScrollView>
+            </ScrollView>
+        </View>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
+        flex: 1,
         backgroundColor: '#1E293B', // Set background color
     },
 });

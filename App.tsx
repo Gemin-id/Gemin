@@ -1,16 +1,17 @@
 import 'react-native-gesture-handler';
-import { StatusBar } from 'expo-status-bar';
+import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
+import { StatusBar } from 'expo-status-bar';
 import HomeStack from './apps/navigation/homeStack';
-import RegisterStack from './apps/navigation/registerStack';
 
 export default function App() {
   return (
     <NavigationContainer>
       <View style={styles.container}>
+        <View style={[{ backgroundColor: '#0E1A2E' }, { height: 20 }]} />
         {/* <StatusBar translucent backgroundColor="transparent" /> */}
-        <HomeStack />        
+        <HomeStack />
       </View>
     </NavigationContainer>
   );
