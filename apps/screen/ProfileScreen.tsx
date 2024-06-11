@@ -157,6 +157,8 @@ const styles = StyleSheet.create({
   },
   image: {
     flex: 1,
+    width: undefined,
+    height: undefined,
   },
   profileImage: {
     width: 100,

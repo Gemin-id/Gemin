@@ -3,18 +3,18 @@ import { View, Text, Animated, StyleSheet, TouchableOpacity } from 'react-native
 
 const notificationTitle = [
     'A new tournament has opened!',
-    'Notification Title 2',
-    'Notification Title 3',
-    'Notification Title 4',
-    'Notification Title 5',
+    'A new tournament has opened!',
+    'A new tournament has opened!',
+    'A new tournament has opened!',
+    'A new tournament has opened!',
 ];
 
 const notificationContent = [
     'Lucky Star just opened its registration! Stay updated and join the action now!',
-    'Notification Content 2',
-    'Notification Content 3',
-    'Notification Content 4',
-    'Notification Content 5',
+    'Koica Cup just opened its registration! Stay updated and join the action now!',
+    'Cikeruh Cup just opened its registration! Stay updated and join the action now!',
+    'Big Versus just opened its registration! Stay updated and join the action now!',
+    'Pixel Power just opened its registration! Stay updated and join the action now!',
 ];
 
 const notifications = notificationTitle.map((title, index) => ({
