@@ -4,6 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
 import firestore from '@react-native-firebase/firestore';
+import StatusBox from '../StatusBox';
 
 interface VerticalItem {
   id: string;
@@ -77,7 +78,7 @@ export default function BodySearch() {
         <View>
           <Image source={{ uri: item.imageUri }} style={styles.image} />
           <View style={styles.statusContainer}>
-            <Text style={styles.statusFont}>{item.status}</Text>
+            <StatusBox status={item.status || ''} />
           </View>
           <LinearGradient colors={['transparent', '#1E293B']} style={styles.gradient} start={{ x: 0.5, y: 0 }} end={{ x: 0.5, y: 1 }} />
         </View>
@@ -200,16 +201,11 @@ const styles = StyleSheet.create({
     height: '50%',
   },
   statusContainer: {
-    backgroundColor: 'green',
     position: 'absolute',
-    height: 25,
-    width: 60,
-    padding: 5,
-    marginTop: 12,
+    top: 5,
     left: 9,
     borderRadius: 8,
-    justifyContent: 'center',
-    alignItems: 'center',
+    overflow: 'hidden',
   },
   statusFont: {
     fontSize: 10,

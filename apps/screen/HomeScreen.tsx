@@ -49,7 +49,7 @@ const HomeScreen = () => {
   
     return (
       <View style={styles.container}>
-        <View style={[{ backgroundColor: '#0E1A2E' }, { height: 20 }]} />
+        {/* <View style={[{ backgroundColor: '#0E1A2E' }, { height: 20 }]} /> */}
         <StatusBar translucent backgroundColor="transparent" />
   
         <Header openSidebar={openSidebar} />

@@ -1,13 +1,29 @@
-import React from 'react';
+ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
 interface StatusBoxProps {
-    isRegistrationClosed: boolean;
+    status: string;
 }
 
-const StatusBox: React.FC<StatusBoxProps> = ({ isRegistrationClosed }) => {
-    const statusBoxColor = isRegistrationClosed ? '#8859C5' : '#389F7A';
-    const statusText = isRegistrationClosed ? 'Ongoing' : 'Open';
+const StatusBox: React.FC<StatusBoxProps> = ({ status }) => {
+    let statusBoxColor;
+    let statusText;
+
+    switch (status) {
+        case 'Ongoing':
+            statusBoxColor = '#8859C5';
+            statusText = 'Ongoing';
+            break;
+        case 'Open':
+            statusBoxColor = '#389F7A';
+            statusText = 'Open';
+            break;
+        // Add more cases as necessary
+        default:
+            statusBoxColor = '#C55959'; // Default color if status is not recognized
+            statusText = status; // Default to showing the status text
+            break;
+    }
 
     return (
         <View style={[styles.statusBox, { backgroundColor: statusBoxColor }]}>

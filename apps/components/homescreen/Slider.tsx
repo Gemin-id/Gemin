@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Image, FlatList, TouchableOpacity } from 'react
 import { useNavigation } from '@react-navigation/native';
 import firestore from '@react-native-firebase/firestore';
 import LinearGradient from 'react-native-linear-gradient';
+import StatusBox from '../StatusBox';
 
 interface SlideItem {
   id: string;
@@ -14,6 +15,7 @@ interface SlideItem {
   tourDate?: string;
   tourTime?: string;
   category?: string;
+  participants?: number;
 }
 
 const Slider: React.FC = () => {
@@ -41,7 +43,7 @@ const Slider: React.FC = () => {
 
   const renderItem = ({ item }: { item: SlideItem }) => {
     const handlePress = () => {
-      navigation.navigate('TournamentInfo', { imageUri: item.imageUri, title: item.title, status: item.status, price: item.price, tourDate: item.tourDate, tourTime: item.tourTime, category: item.category });
+      navigation.navigate('TournamentInfo', { imageUri: item.imageUri, title: item.title, status: item.status, price: item.price, tourDate: item.tourDate, tourTime: item.tourTime, category: item.category, participants: item.participants });
     };
 
     return (
@@ -52,7 +54,7 @@ const Slider: React.FC = () => {
           {item.title && <Text style={styles.title}>{item.title}</Text>}
           {item.time && <Text style={styles.description}>{item.time}</Text>}
           <View style={styles.statusContainer}>
-            <Text style={styles.statusFont}>{item.status}</Text>
+            <StatusBox status={item.status || ''} />
           </View>
         </View>
       </TouchableOpacity>
@@ -117,22 +119,11 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
   statusContainer: {
-    backgroundColor: 'green',
     position: 'absolute',
-    height: 25,
-    width: 60,
-    padding: 5,
-    marginTop: 15,
+    top: 5,
     left: 16,
     borderRadius: 8,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  statusFont: {
-    fontSize: 10,
-    color: 'white',
-    alignItems: 'center',
-    fontWeight: 'bold',
+    overflow: 'hidden',
   },
   gradient: {
     position: 'absolute',

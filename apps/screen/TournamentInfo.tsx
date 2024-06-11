@@ -13,9 +13,6 @@ import FloatingButton from '../components/FloatingButton';
 
 const screenWidth = Dimensions.get('window').width;
 
-const tournament = [
-    { tournamentName: 'Pixel Power 2024', tournamentDate: 'January 1st, 2024', tournamentTime: '13.00' }, 
-];
 
 const overview = [
     { game: 'Mobile Legends', organizer: 'Pixel Tournaments', tournamentFormat: 'Single Elimination' },
@@ -212,7 +209,7 @@ const TournamentInfo = ({ route }: any) => {
                 <LinearGradient colors={['transparent', '#1E293B']} style={styles.gradient} start={{ x: 0.5, y: 0 }} end={{ x: 0.5, y: 1 }} />
             </View>
             <View style={styles.innerContainer}>
-                <StatusBox isRegistrationClosed={isRegistrationClosed} />
+                <StatusBox status={status} />
                 <View style={styles.tournamentHeading}>
                     <View>
                         <View key={index}>

@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Dimensions, Image, FlatList, TouchableOpacity }
 import LinearGradient from 'react-native-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
 import firestore from '@react-native-firebase/firestore';
+import StatusBox from '../StatusBox';
 
 interface VerticalItem {
   id: string;
@@ -16,6 +17,7 @@ interface VerticalItem {
   category?: string;
   tourDate?: string;
   tourTime?: string;
+  participants?: number;
 }
 
 const VerticalImageList = ({ category }: { category: string }) => {
@@ -38,6 +40,7 @@ const VerticalImageList = ({ category }: { category: string }) => {
         tourDate: doc.data().tourDate,
         tourTime: doc.data().tourTime,
         category: doc.data().category,
+        participants: doc.data().participants,
       }));
       setTournaments(fetchedTournaments);
     } catch (error) {
@@ -58,16 +61,17 @@ const VerticalImageList = ({ category }: { category: string }) => {
         price: item.price,
         tourDate: item.tourDate,
         tourTime: item.tourTime,
-        category: item.category // Include category here
+        category: item.category,
+        participants: item.participants,
       });
     };
-  
+
     return (
       <TouchableOpacity onPress={handlePress} style={styles.tournamentContainer}>
         <View>
           <Image source={{ uri: item.imageUri }} style={styles.image} />
           <View style={styles.statusContainer}>
-            <Text style={styles.statusFont}>{item.status}</Text>
+            <StatusBox status={item.status || ''} />
           </View>
           <LinearGradient colors={['transparent', '#1E293B']} style={styles.gradient} start={{ x: 0.5, y: 0 }} end={{ x: 0.5, y: 1 }} />
         </View>
@@ -88,7 +92,6 @@ const VerticalImageList = ({ category }: { category: string }) => {
       </TouchableOpacity>
     );
   };
-  
 
   const calculateNumColumns = () => {
     // Calculate the number of columns based on the screen width
@@ -171,22 +174,11 @@ const styles = StyleSheet.create({
     height: '50%',
   },
   statusContainer: {
-    backgroundColor: 'green',
     position: 'absolute',
-    height: 25,
-    width: 60,
-    padding: 5,
-    marginTop: 12,
+    top: 5,
     left: 9,
     borderRadius: 8,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  statusFont: {
-    fontSize: 10,
-    color: 'white',
-    alignItems: 'center',
-    fontWeight: 'bold',
+    overflow: 'hidden',
   },
   battle: {
     color: 'white',
