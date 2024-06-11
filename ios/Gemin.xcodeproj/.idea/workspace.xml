@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="450d1da1-bd4f-4f13-a6eb-122c9abc9c25" name="Changes" comment="" />
+    <list default="true" id="e35e425c-e826-4702-8117-5eb8e0b1ddce" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -13,13 +13,10 @@
   <component name="ClangdSettings">
     <option name="formatViaClangd" value="false" />
   </component>
-  <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-  </component>
-  <component name="ProjectColorInfo">{
-  &quot;associatedIndex&quot;: 8
-}</component>
-  <component name="ProjectId" id="2gx2p6J3XFnGoM7ysnROdPddbdg" />
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 1
+}]]></component>
+  <component name="ProjectId" id="2h6nFaofWrp6luEGjllmFiVZMDt" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -31,19 +28,18 @@
     "RunOnceActivity.cidr.known.project.marker": "true",
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
-    "git-widget-placeholder": "development",
-    "last_opened_file_path": "/Users/mumtaz/PPAM/Gemin",
+    "last_opened_file_path": "/Users/mumtaz/PPAM/Gemin/ios/Gemin.xcodeproj",
     "settings.editor.selected.configurable": "AndroidSdkUpdater"
   }
 }]]></component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="450d1da1-bd4f-4f13-a6eb-122c9abc9c25" name="Changes" comment="" />
-      <created>1716625088049</created>
+      <changelist id="e35e425c-e826-4702-8117-5eb8e0b1ddce" name="Changes" comment="" />
+      <created>1716923291141</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1716625088049</updated>
+      <updated>1716923291141</updated>
     </task>
     <servers />
   </component>

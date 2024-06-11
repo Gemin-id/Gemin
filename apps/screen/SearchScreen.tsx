@@ -1,10 +1,25 @@
-import { View, Text } from 'react-native'
-import React from 'react'
+import React from 'react';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import Header from '../components/homescreen/Header';
+import BodySearch from '../components/searchScreen/BodySearch';
+import VerticalImageList from '../components/homescreen/Vertical';
 
-export default function SearchScreen() {
+//bisa pakai algoria, typesense
+
+const SearchScreen = () => {
     return (
-        <View>
-            <Text>Search Screen</Text>
+        <View style={styles.container}>
+            <Header />
+            <BodySearch />
         </View>
-    )
-}
+    );
+};
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: '#1E293B', // Set background color
+    },
+});
+
+export default SearchScreen;
